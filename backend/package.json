@@ -1,0 +1,18 @@
+{
+  "name": "application-name",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+  	"crypto-js": "3.x",
+	"ejs": "*",
+    "express": "3.4.3",
+	"habitat": "0.x",
+    "less-middleware": "*",
+	"pg": "2.x",
+	"pg-query" : "0.x",
+	"socket.io": "0.x"
+  }
+}
