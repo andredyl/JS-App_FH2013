@@ -8,11 +8,7 @@ var express = require('express');
 var http = require('http');
 var path = require('path');
 var query = require('pg-query');
-//var env = (function(){
-//    var habitat = require('habitat');
-//    habitat.load('./config.env');
-//    return new habitat('app');
-//    }());
+var RedisStore = require('connect-redis')(express);
 
 
 //routes
@@ -23,7 +19,6 @@ var auth = require('./routes/authentication');
 
 //init
 var app = express();
-//env.get('pgConstrg')
 query.connectionParameters = "postgres://postgres:andredyl@localhost:5432/postgres";
 
 // all environments
@@ -36,9 +31,19 @@ app.use(express.bodyParser());
 app.use(express.methodOverride());
 
 //sessions
-app.use(express.cookieParser('your secret here'));
-app.use(express.session('your secret here'));
-app.use(express.csrf());
+app.use(express.cookieParser('123456789ZXCVBNM'));
+app.use(express.session({
+    store: new RedisStore({
+        host: 'localhost',
+        port: 6379,
+        db: 2,
+        pass: 'RedisPASS'
+    }),
+    secret: '123456789ZXCVBNM',
+    cookie: {
+        maxAge: 60 * 60 * 1000
+    }
+}));
 
 app.use(app.router);
 app.use(require('less-middleware')({ src: path.join(__dirname, 'public') }));
@@ -58,6 +63,8 @@ app.post('/login', function (req,res) {
     auth.loginpost(req,res,query);
 });
 
+app.get('/logout', auth.logout);
+
 app.get('/signup', auth.signup);
 
 app.post('/signup', function (req,res) {
@@ -68,5 +75,3 @@ app.post('/signup', function (req,res) {
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
-
-//app.get('/users', user.list);

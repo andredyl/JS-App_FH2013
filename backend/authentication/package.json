@@ -6,13 +6,12 @@
     "start": "node app.js"
   },
   "dependencies": {
-  	"crypto-js": "3.x",
-	"ejs": "*",
-    "express": "3.4.3",
-	"habitat": "0.x",
-    "less-middleware": "*",
-	"pg": "2.x",
-	"pg-query" : "0.x",
-	"socket.io": "0.x"
+  	"express": "3.4.3",
+	"crypto-js": "3.1.2-1",
+	"ejs": "0.8.4",
+    "less-middleware": "0.1.12",
+	"pg": "2.8.2",
+	"pg-query" : "0.6.0",
+	"connect-redis" : "1.4.6"
   }
 }
