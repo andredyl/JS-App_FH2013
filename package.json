@@ -9,8 +9,6 @@
     "express": "3.4.3",
     "ejs": "*",
     "less-middleware": "*",
-    "pg": "~2.8.3",
-    "jugglingdb": "0.2.x",
-    "jugglingdb-postgres": "latest"
+    "pg": "~2.8.3"
   }
 }
