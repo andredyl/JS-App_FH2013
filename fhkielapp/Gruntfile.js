@@ -29,7 +29,7 @@ module.exports = function (grunt) {
    */
 
   var cssFilesToInject = [
-    'linker/**/master.css'
+    'linker/**/master.css' /* #@run - this line was *.css */
   ];
 
 
@@ -188,13 +188,13 @@ module.exports = function (grunt) {
           {
           expand: true,
           cwd: 'assets/styles/',
-          src: ['master.less'],
+          src: ['master.less'], /* #@run - this line was *.less */
           dest: '.tmp/public/styles/',
           ext: '.css'
         }, {
           expand: true,
           cwd: 'assets/linker/styles/',
-          src: ['master.less'],
+          src: ['master.less'], /* #@run - this line was *.less */
           dest: '.tmp/public/linker/styles/',
           ext: '.css'
         }
