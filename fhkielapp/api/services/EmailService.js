@@ -43,7 +43,7 @@ exports.sendResetLink = function (account, callback) {
                 {data:"<html><body>" +
                     "Hello "+account.infoname+",<br><br>" +
                     "To reset your password, please click on this link: " +
-                    "<a href='https://192.168.110.128:1337/resetpwd?t=" + account.token + "&u=" + account.user + "'>Reset password</a><br><br>" +
+                    "<a href='https://localhost:1337/resetpwd?t=" + account.token + "&u=" + account.user + "'>Reset password</a><br><br>" +
                     "Yours sincerely,<br><br>" +
                     "FH Social Team</br>" +
                     "</body></html>"
