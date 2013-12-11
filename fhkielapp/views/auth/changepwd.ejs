@@ -1,0 +1,17 @@
+
+<% var title = 'Authentication Example' %>
+<% include head %>
+
+<h1>Password Change</h1>
+
+<form method="post" action="/changepwd">
+    <p>
+        <label>New password:</label>
+        <input type="text" name="password">
+    </p>
+    <p>
+        <input type="submit" value="Send">
+    </p>
+</form>
+
+<% include foot %>
