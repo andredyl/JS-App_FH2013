@@ -25,7 +25,7 @@ module.exports = {
            if(err) {
                res.send(500, { error: "DB Error"});
            } else {
-               if (usr) {
+               if (usr.length > 0) {
                    //if the user is found, check the provided password with the one in the database.
                    if (generatePWD(req.body.password,generateUser(req.body.username)) == usr[0].password) {
                        //if the passwords match, check if the "Remember Me" is selected.
