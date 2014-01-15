@@ -79,6 +79,31 @@ module.exports.routes = {
     'post /resetpwd' : {
         controller : 'auth',
         action: 'resetpwd_post'
+    },
+
+    'get /createsubject' : {
+        controller : 'subject',
+        action: 'createsubject'
+    },
+
+    'post /createsubject' : {
+        controller : 'subject',
+        action: 'createsubject_post'
+    },
+
+    'get /enroll' : {
+        controller : 'subject',
+        action: 'enroll'
+    },
+
+    'post /enroll' : {
+        controller : 'subject',
+        action: 'enroll_post'
+    },
+
+    '/menu' : {
+        controller: 'menu',
+        action: 'menu'
     }
 
   /*
