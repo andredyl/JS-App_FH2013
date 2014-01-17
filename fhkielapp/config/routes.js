@@ -34,7 +34,77 @@ module.exports.routes = {
   // (This would also work if you had a file at: `/views/home.ejs`)
   '/': {
     view: 'home/index'
-  }
+  },
+
+    'get /login' : {
+        controller : 'auth',
+        action : 'login'
+    },
+
+    'post /login' : {
+        controller : 'auth',
+        action : 'login_post'
+    },
+
+    '/logout' : {
+        controller : 'auth',
+        action : 'logout'
+    },
+
+    'get /signup' : {
+        controller : 'auth',
+        action: 'signup'
+    },
+
+    'post /signup' : {
+        controller : 'auth',
+        action: 'signup_post'
+    },
+
+    'get /changepwd' : {
+        controller : 'auth',
+        action: 'changepwd'
+    },
+
+    'post /changepwd' : {
+        controller : 'auth',
+        action: 'changepwd_post'
+    },
+
+    'get /resetpwd' : {
+        controller : 'auth',
+        action: 'resetpwd'
+    },
+
+    'post /resetpwd' : {
+        controller : 'auth',
+        action: 'resetpwd_post'
+    },
+
+    'get /createsubject' : {
+        controller : 'subject',
+        action: 'createsubject'
+    },
+
+    'post /createsubject' : {
+        controller : 'subject',
+        action: 'createsubject_post'
+    },
+
+    'get /enroll' : {
+        controller : 'subject',
+        action: 'enroll'
+    },
+
+    'post /enroll' : {
+        controller : 'subject',
+        action: 'enroll_post'
+    },
+
+    '/menu' : {
+        controller: 'menu',
+        action: 'menu'
+    }
 
   /*
   // But what if you want your home page to display

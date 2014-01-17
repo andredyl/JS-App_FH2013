@@ -1,0 +1,54 @@
+
+<%- partial('../partials/header')%>
+
+<div class="page-header">
+<h1>Login</h1>
+</div>
+
+<div class="row">
+<div class="form-wrapper">
+<form  action="/login" class="form-horizontal" role="form" method="post">
+    <div class="form-group">
+        <label for="inputUsername" class="col-sm-2 control-label">Username:</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control input-sm" name="username" id="inputUsername">
+        </div>
+    </div>
+    <div class="form-group">
+        <label for="inputPassword" class="col-sm-2 control-label">Password:</label>
+        <div class="col-sm-10">
+            <input type="password" class="form-control input-sm" name="password" id="inputPassword">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-2">
+          <div class="checkbox">
+            <label>
+             <input type="checkbox" name="remember_me" >Stay on? (Remember me?)
+            </label>
+          </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-sm-offset-2">
+          <button type="submit" class="btn btn-primary btn-lg">Sign in</button>
+        </div>
+    </div>
+    
+</form>
+</div>
+<div class="other-links">
+<h2>Or</h2>
+
+<p>If you are having trouble remembering your password, please use the service below to get a new password:
+<br /><a href='/resetpwd'> Forgot password </a>.</p>
+
+
+<p>If you do not recall having registered or this is your first time visiting the system, please <a href='/signup'> Sign Up! </a></p>
+
+</div>
+</div>
+
+
+<%- partial('../partials/footer') %>
