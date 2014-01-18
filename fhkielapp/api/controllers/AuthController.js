@@ -12,14 +12,21 @@ module.exports = {
     login : function (req,res) {
         //if there is already an authenticated session, return OK.
         //otherwise, it will render the login page.
+        
         if (req.session.user) {
             res.redirect('/menu');
         } else {
-            res.view();
+            res.view({error: false});
         };
     },
 
     login_post : function (req,res) {
+        var error = false;
+        if(req.body.username == "" || req.body.password == "")
+        {
+           return res.view("auth/login", {error: "Username/Password cannot be left empty."});
+        }
+        
         //search for the username in the database.
        Users.findByUsername(req.body.username).done(function(err,usr) {
            if(err) {
@@ -43,13 +50,20 @@ module.exports = {
                            });
                        };
                    } else {
-                       res.send(400, {error: "Please check your Username/Password"});
+                       return res.view("auth/login", {error: "Please check your Username/Password."});
+                       
+                       
                    }
                } else {
-                   res.send(400, {error: "Please check your Username/Password"});
+                   
+                   //res.send(400, {error: "Username does not seem to exist."});
+                  return res.view("auth/login", {error: "Username does not seem to exist."});
+                   
                }
            }
+           
        });
+       
    },
 
     logout : function (req,res) {
