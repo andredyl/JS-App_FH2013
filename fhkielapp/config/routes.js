@@ -104,6 +104,36 @@ module.exports.routes = {
     '/menu' : {
         controller: 'menu',
         action: 'menu'
+    },
+
+    '/subjectmenu': {
+        controller: "subject",
+        action: "subjectmenu"
+    },
+
+    'get /createexam' : {
+        controller: 'subject',
+        action: 'createexam'
+    },
+
+    'post /createexam' : {
+        controller: 'subject',
+        action: 'createexam_post'
+    },
+
+    'get /createproject' : {
+        controller: 'subject',
+        action: 'createproject'
+    },
+
+    'post /createproject' : {
+        controller: 'subject',
+        action: 'createproject_post'
+    },
+
+    'get /chat' : {
+        controller: 'chat',
+        action: 'chat'
     }
 
   /*

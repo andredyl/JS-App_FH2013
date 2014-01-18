@@ -60,7 +60,7 @@ module.exports = {
                         } else {
                             Subjects.create({
                                 name: req.body.name,
-                                professor: us[0].firstname + ' ' + us[0].lastname,
+                                professor: us[0].id,
                                 term: req.body.term
                             }).done(function (e,sub){
                                     if(e){
@@ -82,7 +82,7 @@ module.exports = {
         //otherwise, it will render the login page.
         if (req.session.user) {
             Subjects.find()
-                .limit(10).done(function(err,usr) {
+                .limit(20).done(function(err,usr) {
                     if(err) {
                         res.send(500, { error: "DB Error"});
                     } else {
@@ -114,7 +114,7 @@ module.exports = {
                                 };
                             });
                             }
-                            if (!regist) {console.log(regist);
+                            if (!regist) {
                                 Users_Subjects.create({
                                     subjectID: u[0].id,
                                     userID: usr[0].id
@@ -132,5 +132,150 @@ module.exports = {
                 });
             }
         });
+    },
+
+    subjectmenu: function (req,res){
+    if (req.session.user) {
+        Subjects.findByName(req.param("subject")).done(function(err,usr){
+            if (usr.length >0){
+                res.view({sub:req.param("subject")});
+            }
+            else {
+                res.send(400,{error: "invalid link"})
+            }
+        });
+
+    } else {
+        res.redirect('/login');
     }
-};
+    },
+
+    createexam: function (req,res){
+    if (req.session.user) {
+        Users.findByUsername(req.session.user).done(function(err,usr){
+            if(err) {
+                res.send(500, { error: "DB Error"});
+                }
+            else {
+                if (usr[0].role =='professor'){
+                    res.view();
+                }
+                else {
+                    res.send(400, {error: "You don't have permission to create an Exam"})
+                }
+            }
+            });
+        }
+    else {
+        res.redirect('/login');
+    }
+    },
+
+    createexam_post: function(req,res){
+    var regist = false;
+    Subjects.findByName(req.body.subject).done(function(err,usr){
+            if(err){
+                res.send(500, {error:"DB Error"});
+            }
+            else {
+                if (usr.length>0){
+                    Users.findByUsername(req.session.user).done(function(er,us){
+                       if(usr[0].professor=us[0].id){
+                           Exams.findBySubjectID(usr[0].id).done(function(e,u){
+                               if(u.length>0){
+                                   regist=true;
+                                   res.send(400, {error:"There is a registered exam for this subject"});
+                               }
+
+                           if (!regist){
+                           Exams.create({
+                               subjectID: usr[0].id,
+                               date1: req.body.date1,
+                               date2: req.body.date2
+                           }).done(function (e,u){
+                                   if(e){
+                                       res.send(500, {error: "DB Error"});
+                                   } else {
+                                       res.redirect('/menu');
+                                   };
+                               });
+                           }
+                           });
+                       }
+                        else {
+                           res.send(400, {error:"The Subject was not created by you"});
+                       }
+                    });
+                }
+                else{
+                    res.send(400, {error:"The Subject does not exist"});
+                }
+            }
+        });
+    },
+
+    createproject: function (req,res){
+        if (req.session.user) {
+            Users.findByUsername(req.session.user).done(function(err,usr){
+                if(err) {
+                    res.send(500, { error: "DB Error"});
+                }
+                else {
+                    if (usr[0].role =='professor'){
+                        res.view();
+                    }
+                    else {
+                        res.send(400, {error: "You don't have permission to create an Exam"})
+                    }
+                }
+            });
+        }
+        else {
+            res.redirect('/login');
+        }
+    },
+
+    createproject_post: function(req,res){
+        var regist = false;
+        Subjects.findByName(req.body.subject).done(function(err,usr){
+            if(err){
+                res.send(500, {error:"DB Error"});
+            }
+            else {
+                if (usr.length>0){
+                    Users.findByUsername(req.session.user).done(function(er,us){
+                        if(usr[0].professor=us[0].id){
+                            Projects.findBySubjectID(usr[0].id).done(function(e,u){
+                                if(u.length>0){
+                                    regist=true;
+                                    res.send(400, {error:"There is a registered project for this subject"});
+                                }
+
+                                if (!regist){
+                                    Projects.create({
+                                        subjectID: usr[0].id,
+                                        name: req.body.pname,
+                                        deadline: req.body.deadline,
+                                        description: req.body.description
+                                    }).done(function (e,u){
+                                            if(e){
+                                                res.send(500, {error: "DB Error"});
+                                            } else {
+                                                res.redirect('/menu');
+                                            };
+                                        });
+                                }
+                            });
+                        }
+                        else {
+                            res.send(400, {error:"The Subject was not created by you"});
+                        }
+                    });
+                }
+                else{
+                    res.send(400, {error:"The Subject does not exist"});
+                }
+            }
+        });
+    }
+}

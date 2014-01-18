@@ -1,0 +1,11 @@
+<% var title = sub %>
+<% include ../auth/head %>
+
+<h1><%=sub%></h1>
+
+<%if (type=='professor'){%>
+Create Exam
+<%} else {%>
+Exam Dates:
+<%}%>
+<% include ../auth/foot %>

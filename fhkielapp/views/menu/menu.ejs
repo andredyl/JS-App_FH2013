@@ -2,12 +2,26 @@
 <% include ../auth/head %>
 
 <h1>Create subject</h1>
+<%if (type=='professor'){%>
 <p>
     <a href='/createsubject'> Create Subject</a>
 </p>
-
+<p>
+    <a href='/createexam'> Create Exam</a>
+</p>
+<p>
+    <a href='/createproject'> Create Project</a>
+</p>
+<%} else {%>
 <p>
     <a href='/enroll'> Enroll Subject </a>
 </p>
-
+<%}%>
+<p>
+<h3>Your Subjects:</h3>
+<% if (list.length > 0) {list.forEach(function(u) { %>
+<tr><a href="/subjectmenu?subject=<%=u%>"><%=u%></a><br/></tr>
+<%});}%>
+</p>
+<br/><br/>
 <% include ../auth/foot %>

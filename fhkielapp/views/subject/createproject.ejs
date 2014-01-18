@@ -1,0 +1,28 @@
+<% var title = 'Create Project' %>
+<% include ../auth/head %>
+
+<h1>Create Project</h1>
+
+<form method="post" action="/createproject">
+    <p>
+        <label>Subject:</label>
+        <input type="text" name="subject">
+    </p>
+    <p>
+        <label>Name:</label>
+        <input type="text" name="pname">
+    </p>
+    <p>
+        <label>Submission Deadline:</label>
+        <input type="text" name="deadline">
+    </p>
+    <p>
+        <label>Description:</label>
+        <input type="text" name="description">
+    </p>
+    <p>
+        <input type="submit" value="Create">
+    </p>
+</form>
+
+<% include ../auth/foot %>
