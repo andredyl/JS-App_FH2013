@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Socket.io</title>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" type="text/css" media="screen" />
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+    <link type="text/css" href="/linker/styles/jquery.ui.chatbox.css" rel="stylesheet" />
+</head>
+<h3>Chat Test</h3>
+<p>You should log-in before being able to see users!</p>
+<body>
+<p><br/>User list:</p>
+<ul id="userList">
+</ul>
+<input id="connect" type="submit" value="Connect">
+<input id="disconnect" type="submit" value="Disconnect">
+
+<script type="text/javascript">
+    $(document).ready(function(){
+
+        loadUserList();
+
+        //connect and disconnect button because I didn´t manage to make it connect automaticallYy
+        $('#connect').click(function(){
+            subscribeChats();
+        })
+
+        $('#disconnect').click(function(){
+            unsubscribeChats();
+        })
+
+        //overrides the default sent function to ours.
+        chatboxManager.init({messageSent : sendMessage});
+    });
+
+    function loadUserList () {
+        socket.post('/chat/listUsers', function (data) {
+
+            for(var i = 0 ; i<data.length; i++) {
+                $("ul#userList").append(
+                        $('<li>').append("<a href= '#' id = '"+ data[i].username +
+                                "' data-online = '"+data[i].isonline+
+                                "' data-chatid = '0' onclick = 'requestChat(this)' >"+
+                                data[i].firstname + ' ' + data[i].lastname+
+                                "</a>"
+                        )
+                ); // close ul append
+            } //close for
+        }); //close listUsers
+    };
+
+    function subscribeChats () {
+        $("ul#userList li").each(function(){
+            var current = $(this).find("a").first();
+
+            socket.post('/chat/requestChat', {username : current[0].id},function(data) {
+                current.attr('data-chatid',data.chatid);
+                socket.post('/chat/subscribe',{id : data.chatid },function(response){});
+            });
+        });
+    }
+
+    //not complete function! So far just set all data-chatid´s to 0, however,
+    //it will be possible to open a chat with someone (the same chat to everybody)
+    //need also to unsubscribe the user!
+    //However, the ideal thing is that everything should be done automatically.
+    function unsubscribeChats () {
+        $("ul#userList li").each(function(){
+            var current = $(this).find("a").first().attr('data-chatid',"0");
+        });
+    }
+
+    function requestChat (caller) {
+        chatboxManager.addBox(caller.dataset.chatid,{title: caller.innerHTML});
+    };
+
+    function sendMessage(id,user,msg) {
+        socket.post('/chat/newmessage',{ chatid: id, message: msg, user: user },function (data) {});
+    };
+
+</script>
+
+</body>
+
+</html>
