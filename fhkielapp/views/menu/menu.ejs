@@ -16,12 +16,13 @@
 <p>
     <a href='/enroll'> Enroll Subject </a>
 </p>
-<%}%>
 <p>
 <h3>Your Subjects:</h3>
 <% if (list.length > 0) {list.forEach(function(u) { %>
 <tr><a href="/subjectmenu?subject=<%=u%>"><%=u%></a><br/></tr>
 <%});}%>
 </p>
+<%}%>
+
 <br/><br/>
 <% include ../auth/foot %>

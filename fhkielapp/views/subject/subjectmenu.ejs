@@ -3,9 +3,12 @@
 
 <h1><%=sub%></h1>
 
-<%if (type=='professor'){%>
-Create Exam
-<%} else {%>
-Exam Dates:
-<%}%>
+<h3>Exam information</h3>
+<%=ex%>
+<br/><br/>
+<h3>Project information</h3>
+<%=pr%>
+<br/><br/>
+<h3>Group</h3>
+
 <% include ../auth/foot %>

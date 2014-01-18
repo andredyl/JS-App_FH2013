@@ -13,7 +13,7 @@ module.exports = {
         //if there is already an authenticated session, return OK.
         //otherwise, it will render the login page.
         if (req.session.user) {
-            res.send(200);
+            res.redirect('/menu');
         } else {
             res.view();
         };
@@ -34,12 +34,12 @@ module.exports = {
                            req.session.regenerate(function () {
                                req.session.user = usr[0].username;
                                req.session.cookie.maxAge = 60 * 60 * 1000;
-                               res.send(200);
+                               res.redirect('/menu');
                            });
                        } else {
                            req.session.regenerate(function () {
                                req.session.user = usr[0].username;
-                               res.send(200);
+                               res.redirect('/menu');
                            });
                        };
                    } else {
@@ -91,6 +91,7 @@ module.exports = {
                     firstname: req.body.firstname,
                     lastname: req.body.lastname,
                     matnumber: req.body.matnumber,
+                    role:'student',
                     email : req.body.email
                 }).done(function (err,usr){
                         if(err){
@@ -100,7 +101,7 @@ module.exports = {
                                 "username": req.body.username,
                                 "infoname": req.body.firstname + ' ' + req.body.lastname,
                                 "email": req.body.email });
-                            res.send(200);
+                            res.redirect('/login');
                         };
                     });
             };

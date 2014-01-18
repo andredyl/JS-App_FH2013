@@ -135,11 +135,18 @@ module.exports = {
     },
 
     subjectmenu: function (req,res){
+    var project='Currently there is no project defined';
+    var exam='The dates of the exam are not defined yet';
     if (req.session.user) {
         Subjects.findByName(req.param("subject")).done(function(err,usr){
             if (usr.length >0){
-                res.view({sub:req.param("subject")});
-            }
+                Projects.findBySubjectID(usr[0].id).done(function(er,us){
+                    if (us.length>0){project=us[0].name+': '+us[0].description+' Deadline: '+us[0].deadline;}
+                    Exams.findBySubjectID(usr[0].id).done(function(e,u){
+                        if (u.length>0){exam='Date First Round: '+u[0].date1+'\n Date Second Round: '+u[0].date2;}
+                res.view({sub:req.param("subject"),ex:exam,pr:project});
+            });
+                });}
             else {
                 res.send(400,{error: "invalid link"})
             }
