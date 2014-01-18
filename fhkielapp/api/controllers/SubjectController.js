@@ -137,6 +137,7 @@ module.exports = {
     subjectmenu: function (req,res){
     var project='Currently there is no project defined';
     var exam='The dates of the exam are not defined yet';
+    var bo=false;
     if (req.session.user) {
         Subjects.findByName(req.param("subject")).done(function(err,usr){
             if (usr.length >0){
@@ -144,7 +145,24 @@ module.exports = {
                     if (us.length>0){project=us[0].name+': '+us[0].description+' Deadline: '+us[0].deadline;}
                     Exams.findBySubjectID(usr[0].id).done(function(e,u){
                         if (u.length>0){exam='Date First Round: '+u[0].date1+'\n Date Second Round: '+u[0].date2;}
-                res.view({sub:req.param("subject"),ex:exam,pr:project});
+                        req.session.subjectid=usr[0].id;
+                        Users.findByUsername(req.session.user).done(function(d,f){
+                            Groups.findBySubjectID(req.session.subjectid).done(function(g,h){
+                                Users_Groups.findByUserID(f[0].id).done(function(k,l){
+                                    l.forEach(function(t){
+                                        h.forEach(function(y){
+                                            if(y.id== t.groupID){
+                                                bo=true;
+                                                req.session.groupid= t.groupID;
+                                                req.session.projectid=us[0].id;
+                                            }
+                                        });
+                                    });
+                                });
+
+                            });
+                        });
+                setTimeout(function(){res.view({sub:req.param("subject"),ex:exam,pr:project,hasgroup:bo});},200);
             });
                 });}
             else {
@@ -187,7 +205,7 @@ module.exports = {
             else {
                 if (usr.length>0){
                     Users.findByUsername(req.session.user).done(function(er,us){
-                       if(usr[0].professor=us[0].id){
+                       if(usr[0].professor==us[0].id){
                            Exams.findBySubjectID(usr[0].id).done(function(e,u){
                                if(u.length>0){
                                    regist=true;
@@ -251,7 +269,7 @@ module.exports = {
             else {
                 if (usr.length>0){
                     Users.findByUsername(req.session.user).done(function(er,us){
-                        if(usr[0].professor=us[0].id){
+                        if(usr[0].professor==us[0].id){
                             Projects.findBySubjectID(usr[0].id).done(function(e,u){
                                 if(u.length>0){
                                     regist=true;
@@ -286,3 +304,4 @@ module.exports = {
         });
     }
 }
+

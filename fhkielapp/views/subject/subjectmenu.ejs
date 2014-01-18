@@ -10,5 +10,10 @@
 <%=pr%>
 <br/><br/>
 <h3>Group</h3>
+<%if (hasgroup){%>
+<a href="/group?sub=<%=sub%>">Project Group</a>
+<%}else{%>
+<a href="/creategroup?sub=<%=sub%>">Create Project Group</a>
+<%}%>
 
 <% include ../auth/foot %>

@@ -76,7 +76,12 @@ module.exports = {
     },
 
     signup : function (req,res) {
-        res.view();
+
+        if (req.session.user) {
+            res.redirect('/menu');
+        } else {
+            res.view({error: false});
+        };
     },
 
     signup_post : function (req,res) {
@@ -85,6 +90,14 @@ module.exports = {
         //exist in the database. In case both conditions are false,
         //the data will be inserted into the database and a welcome
         //email is sent.
+        var error = false;
+        if(req.body.email == "" || req.body.name == ""
+           || req.body.matnumber == "" || req.body.password == ""
+           || req.body.surname == ""|| req.body.username == "")
+        {
+             res.view("auth/signup", {error: "One or more required fields are missing"});
+        }
+
         Users.find({
             or : [
                 {username : req.body.username},
@@ -112,7 +125,10 @@ module.exports = {
                     email : req.body.email
                 }).done(function (err,usr){
                         if(err){
-                            req.send(500, {error: "DB Error"});
+
+                            res.view("auth/signup", {error: "Wrong Email Format - No Foreign Characters"});
+
+                            //res.send(500, {error: "DB Error"});
                         } else {
                             EmailService.sendWelcomeEmail({
                                 "username": req.body.username,
@@ -123,6 +139,7 @@ module.exports = {
                     });
             };
         });
+
     },
 
     changepwd : function (req,res) {
@@ -160,7 +177,7 @@ module.exports = {
         var token = req.query["t"];
         var user = req.query["u"];
 
-        if (token) {
+            if (token) {
             Tokens.findById(token).done(function(err,tkn) {
                 if(err) {
                     res.send(500, { error: "DB Error"});
@@ -178,7 +195,7 @@ module.exports = {
                 };
             });
         } else {
-            res.view();
+                res.view({error: false});
         };
     },
 
@@ -188,16 +205,18 @@ module.exports = {
         //checks for the e-mail in the database and if found,
         //send the reset link to the user.
         var token = generateResetCode(128);
-
+        var error = false;
         Users.findByEmail(req.body.email).done(function(err,usr) {
             if(err) {
                 res.send(500, { error: "DB Error"});
             } else {
+                if(usr.length > 0){
                 Tokens.create({
                     id : token,
                     user : usr[0].username,
                     createtime : new Date().getTime()
-                }).done(function(err,tkn) {
+                }
+                ).done(function(err,tkn) {
                         if (err) {
                             res.send(500, { error: "DB Error"});
                         } else {
@@ -206,9 +225,14 @@ module.exports = {
                                 "user" : usr[0].username,
                                 "token" : token,
                                 "email": usr[0].email});
-                            res.send(200);
+                            res.view("auth/login", {error: "Email Sent"});
                         };
                     });
+                }
+                else
+                {
+                    res.view("auth/resetpwd", {error: "Email Not Found"});
+                }
             };
         });
     }

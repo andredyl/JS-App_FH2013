@@ -1,0 +1,33 @@
+<% var title = 'Group' %>
+<% include ../auth/head %>
+
+<h1>Group</h1>
+
+<h2>
+<form method="post" action="/addmember">
+    <p>
+        <label>Username:</label>
+        <input type="text" name="uname">
+    </p>
+        <input type="submit" value="Add">
+    </p>
+</form>
+</h2>
+
+<h2>Group Posts</h2>
+<p>
+    <%history.forEach(function(u) { %>
+    <tr><%=u.text%><br/></tr>
+    <%});%>
+</p>
+<form method="post" action="/group">
+    <p>
+        <label>Post:</label>
+        <input type="text" name="message">
+    </p>
+    <input type="submit" value="Post">
+    </p>
+</form>
+
+
+<% include ../auth/foot %>
