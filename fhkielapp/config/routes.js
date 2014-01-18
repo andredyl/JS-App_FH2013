@@ -134,6 +134,31 @@ module.exports.routes = {
     'get /chat' : {
         controller: 'chat',
         action: 'chat'
+    },
+
+    'get /group' : {
+        controller: 'group',
+        action: 'group'
+    },
+
+    'post /group' : {
+        controller: 'group',
+        action: 'group_post'
+    },
+
+    'post /addmember': {
+        controller: 'group',
+        action: 'addmember_post'
+    },
+
+    'get /creategroup': {
+        controller: 'group',
+        action: 'creategroup'
+    },
+
+    'post /creategroup': {
+        controller: 'group',
+        action: 'creategroup_post'
     }
 
   /*
