@@ -58,6 +58,14 @@ div#main{
         margin-bottom:15px;
     }
     
+    #to-login{
+        &:after{
+            .icon(@fa-var-arrow-circle-o-right);
+            margin-left:5px;
+            font-size:21px;
+        }
+    }
+    
 }
 /** end styles for main landing page */
 
@@ -66,6 +74,8 @@ div#main{
     .makeRow;
 }
 .form-wrapper{
+    
+  
   .makeColumn(6);
   
   .form-horizontal{
@@ -91,6 +101,19 @@ div#main{
     }
     
   }
+}
+.signup .form-wrapper{
+    .makeColumn(12);
+    
+    .col-sm-2{
+        .makeColumn(2);
+        .control-label{
+            line-height:14px;
+        }
+    }
+    .col-sm-offset-2{
+        .makeColumn(6,2);
+    }
 }
 .other-links{
     .makeColumn(5,1);
