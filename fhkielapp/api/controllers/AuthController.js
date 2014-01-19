@@ -132,8 +132,8 @@ module.exports = {
                 Users.create({
                     username: req.body.username,
                     password: generatePWD(req.body.password, generateUser(req.body.username)),
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
+                    firstname: req.body.name,
+                    lastname: req.body.surname,
                     matnumber: req.body.matnumber,
                     role:'student',
                     email : req.body.email,
