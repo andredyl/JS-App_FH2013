@@ -6,37 +6,37 @@
 <h1>Welcome</h1>
 </div>
 <% if (type=='professor'){ %>
-<p>
-    <a href='/createsubject'> Create Subject</a>
-</p>
-<p>
-    <a href='/createexam'> Create Exam</a>
-</p>
-<p>
-    <a href='/createproject'> Create Project</a>
-</p>
+
 <% } else { %>
-<p>
-    <a href='/enroll'> Enroll Subject </a>
-</p>
-
-
 <h3>Your Subjects:</h3>
-<div class="list">
-<ul class="">
+<div class="listing">
+<ul >
 <% if (list.length > 0) {
     list.forEach(function(u) { 
 %>
-<div><a href="/subjectmenu?subject=<%=u%>"><%=u%></a><br/></div>
+<li><a href="/subjectmenu?subject=<%=u%>"><%=u%></a></li>
 <%                          });
+    }else{
+%>
+<li ><div class="no-records">You have no subjects that you are enrolled in.</div></li>
+<%                          
     }
 %>
 </ul>
 </div>
+
 <h3>Your Groups:</h3>
+<div class="listing">
+<ul >
 <% if (list2.length > 0) {list2.forEach(function(a) { %>
-<tr><%=a%><br/></tr>
-<%});}%>
+<li><%=a%></li>
+<%});}else{%>
+<li ><div class="no-records">You have no groups that you are enrolled in.</div></li>
+<%                          
+    }
+%>
+</ul>
+</div>
 <%}%>
 
 </div>
