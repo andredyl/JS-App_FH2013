@@ -25,6 +25,7 @@ body.authenticated #chat-section{
                 
                 
                 &.chat-user-true{
+                    pointer-events: auto;
                     color:green;
                     &:before{
                         .icon(@fa-var-user);
@@ -38,6 +39,7 @@ body.authenticated #chat-section{
                     }
                 }
                 &.chat-user-false{
+                    pointer-events: none;
                     color:gray;
                     &:before{
                         .icon(@fa-var-minus-circle);
