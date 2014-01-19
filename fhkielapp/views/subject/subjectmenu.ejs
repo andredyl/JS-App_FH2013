@@ -1,5 +1,5 @@
 <% var title = sub %>
-<% include ../auth/head %>
+<%- partial('../partials/header')%>
 
 <h1><%=sub%></h1>
 
@@ -16,4 +16,4 @@
 <a href="/creategroup?sub=<%=sub%>">Create Project Group</a>
 <%}%>
 
-<% include ../auth/foot %>
+<%- partial('../partials/footer') %>

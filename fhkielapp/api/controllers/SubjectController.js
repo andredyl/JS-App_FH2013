@@ -86,7 +86,7 @@ module.exports = {
                     if(err) {
                         res.send(500, { error: "DB Error"});
                     } else {
-            res.view({list:usr});}
+            res.view({list:usr,layout:"layout_extended"});}
                 });
         } else {
             res.redirect('/login');
@@ -218,11 +218,31 @@ module.exports = {
                                date1: req.body.date1,
                                date2: req.body.date2
                            }).done(function (e,u){
-                                   if(e){
-                                       res.send(500, {error: "DB Error"});
-                                   } else {
-                                       res.redirect('/menu');
-                                   };
+                                   Calendar.create({
+                                           username : usr[0].id.toString(),
+                                           _id : Math.floor((Math.random()*10000)+1).toString(),
+                                           start_date : req.body.date1,
+                                           end_date : req.body.date1,
+                                           text : req.body.subject+' Exam'
+                                       }
+                                   ).done(function(ab,cd){
+                                           if(ab){
+                                               res.send(500, {error: "DB Error"});
+                                           } else {
+                                               Calendar.create({
+                                                       username : usr[0].id.toString(),
+                                                       _id : Math.floor((Math.random()*10000)+1).toString(),
+                                                       start_date : req.body.date2,
+                                                       end_date : req.body.date2,
+                                                       text : req.body.subject+' Exam'
+                                                   }
+                                               ).done(function(fg,hi){
+                                                       if(fg){
+                                                           res.send(500, {error: "DB Error"});
+                                                       } else {
+                                                           res.redirect('/menu');
+                                                       }});
+                                           }});
                                });
                            }
                            });
@@ -283,11 +303,20 @@ module.exports = {
                                         deadline: req.body.deadline,
                                         description: req.body.description
                                     }).done(function (e,u){
-                                            if(e){
-                                                res.send(500, {error: "DB Error"});
-                                            } else {
+                                            Calendar.create({
+                                                        username : usr[0].id.toString(),
+                                                        _id : Math.floor((Math.random()*10000)+1).toString(),
+                                                        start_date : req.body.deadline,
+                                                        end_date : req.body.deadline,
+                                                        text : req.body.subject+' Project Deadline'
+                                                    }
+                                            ).done(function(ab,cd){
+                                                    if(ab){
+                                                        res.send(500, {error: "DB Error"});
+                                                    } else {
                                                 res.redirect('/menu');
-                                            };
+                                            }});
+
                                         });
                                 }
                             });
