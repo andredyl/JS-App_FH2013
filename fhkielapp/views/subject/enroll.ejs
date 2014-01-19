@@ -1,31 +1,26 @@
-<%- partial('../partials/header_authenticated')%>
+<% var title = 'Enroll' %>
+<%- partial('../partials/header')%>
 
-<div id="content-section">
-    <h1>Enroll</h1>
+<h1>Enroll</h1>
 
-    <p>
+<p>
     <h3>List of available Subjects:</h3>
     <% if (list.length > 0) {list.forEach(function(u) { %>
-    <div><%=u.name%><br/></div>
-    <%});}%>
+      <tr><%=u.name%><br/></tr>
+<%});}%>
+</p>
+<br/><br/>
+<p>Please enter the desired subject to enroll:</p>
+<form method="post" action="/enroll">
+    <p>
+        <label>Subject:</label>
+        <input type="text" name="subject">
     </p>
-    <br/><br/>
-    <p>Please enter the desired subject to enroll:</p>
-    <form method="post" action="/enroll">
-        <p>
-            <label>Subject:</label>
-            <input type="text" name="subject">
-        </p>
 
-        <p>
-            <input type="submit" value="Enroll">
-        </p>
-    </form>
-</div>
-<div id="chat-section">
-    <%- partial('../chat/chat')%>
-</div>
-
-<%- partial('../partials/footer')%>
+    <p>
+        <input type="submit" value="Enroll">
+    </p>
+</form>
 
 
+<%- partial('../partials/footer') %>
