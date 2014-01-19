@@ -3,16 +3,19 @@
 <div id="content-section">
     <h1>Group</h1>
 
-    <h2>
         <form method="post" action="/addmember">
             <p>
-                <label>Username:</label>
-                <input type="text" name="uname">
+                <label>Add Member:</label>
+                <select  name="uname" >
+                    <% if (list.length > 0) {list.forEach(function(u) { %>
+                    <option value="<%=u.username%>"><%=u.firstname+' '+u.lastname%></option>
+                    <%});}%>
+                </select>
             </p>
             <input type="submit" value="Add">
             </p>
         </form>
-    </h2>
+
 
     <h2>Group Posts</h2>
     <p>

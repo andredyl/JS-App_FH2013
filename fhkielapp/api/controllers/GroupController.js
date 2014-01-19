@@ -92,8 +92,14 @@ module.exports = {
     group: function(req,res){
         if (req.session.user) {
             Posts.findByGroupID(req.session.groupid).done(function(err,usr){
-                res.view({layout:"layout_extended",history:usr});
-            });
+                    Users.find({role:'student'})
+                        .limit(20).done(function(er,us) {
+                            if(er) {
+                                res.send(500, { error: "DB Error"});
+                            } else {
+                                res.view({list:us,layout:"layout_extended",history:usr});}
+                        });
+                });
 
         } else {
             res.redirect('/login');
