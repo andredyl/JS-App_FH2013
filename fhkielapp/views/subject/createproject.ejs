@@ -1,28 +1,52 @@
 <%- partial('../partials/header_authenticated')%>
 
 <div id="content-section">
+    <div class="page-header">
     <h1>Create Project</h1>
+</div>
 
-    <form method="post" action="/createproject">
-        <p>
-            <label>Subject:</label>
-            <input type="text" name="subject">
-        </p>
-        <p>
-            <label>Name:</label>
-            <input type="text" name="pname">
-        </p>
-        <p>
-            <label>Submission Deadline:</label>
-            <input type="text" name="deadline">
-        </p>
-        <p>
-            <label>Description:</label>
-            <input type="text" name="description">
-        </p>
-        <p>
-            <input type="submit" value="Create">
-        </p>
+    <div class="row">
+        <div class="form-wrapper">
+            <form  action="/createproject" class="form-horizontal" role="form" method="post">
+
+                <div class="form-group">
+                    <label for="inputSubject" class="col-sm-2 control-label">Subject:</label>
+                    <div class="col-sm-10">
+                        <select class="form-control input-sm" name="subject" id="inputSubject">
+                            <% if (list.length > 0) {list.forEach(function(u) { %>
+                            <option value="<%=u.name%>"><%=u.name%></option>
+                            <%});}%>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSubject" class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control input-sm" name="name" id="inputName">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSubject" class="col-sm-2 control-label">Submission Deadline:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control input-sm" name="deadline" id="inputDeadline">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputSubject" class="col-sm-2 control-label">Description:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control input-sm" name="description" id="inputDescription">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                    </div>
+                </div>
+
+
     </form>
 
 </div>
