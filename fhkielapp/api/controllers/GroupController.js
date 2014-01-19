@@ -92,13 +92,16 @@ module.exports = {
     group: function(req,res){
         if (req.session.user) {
             Posts.findByGroupID(req.session.groupid).done(function(err,usr){
-                    Users.find({role:'student'})
+                Users_Subjects.findBySubjectID(req.session.subjectid).done(function(error,a){
+                    Users.find({role:'student',id: a.userID})
                         .limit(20).done(function(er,us) {
                             if(er) {
                                 res.send(500, { error: "DB Error"});
                             } else {
                                 res.view({list:us,layout:"layout_extended",history:usr});}
                         });
+                });
+
                 });
 
         } else {
