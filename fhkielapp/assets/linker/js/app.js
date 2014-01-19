@@ -29,10 +29,17 @@
             log('New comet message received :: ', message);
             //////////////////////////////////////////////////////
 
-            if ( message.payload.type == "chat" ) {
-                newChatMessage(message.payload);
-            };
-
+            if (message.payload)
+            {
+                if ( message.payload.type == "chat" ) {
+                    $("a#"+message.payload.user).trigger('click');
+                    newChatMessage(message.payload);
+                };
+            } else {
+                if ( message.model === "users" && message.verb === "update" ) {
+                    $("a#"+message.data.username).attr('class','chat-user-'+message.data.isonline);
+                };
+            }
 
         });
 

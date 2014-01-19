@@ -1,8 +1,8 @@
 /**
  * AuthController
  *
- * @module		:: Controller
- * @description	:: Contains logic for handling requests.
+ * @module      :: Controller
+ * @description :: Contains logic for handling requests.
  */
 
 var crypto = require ("crypto-js/sha3");
@@ -40,6 +40,9 @@ module.exports = {
                        //in any case, a new session will be created.
                        if (req.body.remember_me) {
                            req.session.regenerate(function () {
+                               Users.update({id: usr[0].id}, {isonline : true}, (function (err, usr) {
+                                   Users.publishUpdate(usr[0].id,{username : usr[0].username, isonline : true});
+                               }));
                                req.session.user = usr[0].username;
                                req.session.cookie.maxAge = 60 * 60 * 1000;
                                //res.redirect('/menu');
@@ -47,6 +50,9 @@ module.exports = {
                            });
                        } else {
                            req.session.regenerate(function () {
+                               Users.update({id: usr[0].id}, {isonline : true}, (function (err, usr) {
+                                   Users.publishUpdate(usr[0].id,{username : usr[0].username, isonline : true});
+                               }));
                                req.session.user = usr[0].username;
                                //res.redirect('/menu');
                                 return res.view("home/authenticated_index",{layout: "layout_extended"});
@@ -70,6 +76,14 @@ module.exports = {
    },
 
     logout : function (req,res) {
+        var usrname = req.session.user
+        if (usrname !== undefined)
+        {
+            Users.update({username: usrname}, {isonline : false}, (function (err, usr) {
+                Users.publishUpdate(usr[0].id,{username : usrname, isonline : false});
+            }));
+        }
+
         req.session.destroy(function () {
             res.redirect('/login');
         });
@@ -122,7 +136,8 @@ module.exports = {
                     lastname: req.body.lastname,
                     matnumber: req.body.matnumber,
                     role:'student',
-                    email : req.body.email
+                    email : req.body.email,
+                    isonline : false
                 }).done(function (err,usr){
                         if(err){
 

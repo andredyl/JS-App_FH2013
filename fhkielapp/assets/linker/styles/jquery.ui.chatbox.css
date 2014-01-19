@@ -2,7 +2,7 @@
 .ui-chatbox {
     position: fixed;
     bottom:0;
-    padding: 2px;
+    padding: 0px;
     background:  #CCCCCC;
 }
 

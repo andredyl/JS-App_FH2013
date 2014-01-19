@@ -1,26 +1,27 @@
 
+<style type="text/css">
+    a.chat-user-true {
+        color: green;
+        pointer-events: auto;
+    }
+
+    a.chat-user-false {
+        pointer-events: none;
+    }
+</style>
 <h3>Chat Test</h3>
 <p>You should log-in before being able to see users!</p>
 <body>
 <p><br/>User list:</p>
 <ul id="userList">
+<div id ="loadconnect">Connecting...</div>
 </ul>
-<input id="connect" type="submit" value="Connect">
-<input id="disconnect" type="submit" value="Disconnect">
 
 <script type="text/javascript">
-    $(document).ready(function(){
+   $(document).ready(function(){
 
         loadUserList();
-
-        //connect and disconnect button because I didn´t manage to make it connect automaticallYy
-        $('#connect').click(function(){
-            subscribeChats();
-        })
-
-        $('#disconnect').click(function(){
-            unsubscribeChats();
-        })
+        $('#loadconnect').show();
 
         //overrides the default sent function to ours.
         chatboxManager.init({messageSent : sendMessage});
@@ -28,18 +29,17 @@
 
     function loadUserList () {
         socket.post('/chat/listUsers', function (data) {
-
             for(var i = 0 ; i<data.length; i++) {
-                $("ul#userList").append(
-                        $('<li>').append("<a href= '#' id = '"+ data[i].username +
-                                "' data-online = '"+data[i].isonline+
-                                "' data-chatid = '0' onclick = 'requestChat(this)' >"+
-                                data[i].firstname + ' ' + data[i].lastname+
-                                "</a>"
-                        )
-                ); // close ul append
+                    $("ul#userList").append(
+                            $('<li>').append("<a href= '#' class = 'chat-user-"+data[i].isonline+"'" +
+                                    "id = '"+ data[i].username +
+                                    "' data-chatid = '0' onclick = 'requestChat(this)' >"+
+                                    data[i].firstname + ' ' + data[i].lastname+
+                                    "</a>"
+                            ));//close ul append
             } //close for
-        }); //close listUsers
+            subscribeChats();
+        }); //close listUsers response
     };
 
     function subscribeChats () {
@@ -51,6 +51,7 @@
                 socket.post('/chat/subscribe',{id : data.chatid },function(response){});
             });
         });
+        $('#loadconnect').hide();
     }
 
     //not complete function! So far just set all data-chatid´s to 0, however,
