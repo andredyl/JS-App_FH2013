@@ -40,6 +40,7 @@
    $(document).ready(function(){
         
         $("#chat-section").css("height",$("#container").height()-64);
+        $("#content-section").css("width",$("#content-section").width()*1 - $("#chat-section").width()*1);
 
         loadUserList();
         $('#loadconnect').show();
@@ -56,7 +57,7 @@
                                     "id = '"+ data[i].username +
                                     "' data-chatid = '0' onclick = 'requestChat(this)' >"+
                                     data[i].firstname + ' ' + data[i].lastname+
-                                    "</a>"
+                                    "</a></li>"
                             ));//close ul append
             } //close for
             subscribeChats();
