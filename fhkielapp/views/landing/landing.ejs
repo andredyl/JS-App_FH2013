@@ -18,7 +18,7 @@
 <%                          });
     }else{
 %>
-<li ><div class="no-records">You have no subjects that you are enrolled in.</div></li>
+<li class="no-padding"><div class="no-records">You have no subjects that you are enrolled in.</div></li>
 <%                          
     }
 %>
@@ -27,11 +27,11 @@
 
 <h3>Your Groups:</h3>
 <div class="listing">
-<ul >
+<ul class="groups">
 <% if (list2.length > 0) {list2.forEach(function(a) { %>
 <li><%=a%></li>
 <%});}else{%>
-<li ><div class="no-records">You have no groups that you are enrolled in.</div></li>
+<li class="no-padding"><div class="no-records">You have no groups that you are enrolled in.</div></li>
 <%                          
     }
 %>
