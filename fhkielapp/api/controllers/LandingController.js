@@ -49,7 +49,7 @@ module.exports = {
                             }
                         }
                     });
-                    setTimeout(function(){res.view({list:lista,list2:lista2,type:us[0].role, layout:"layout_extended"});},200);
+                    setTimeout(function(){req.session.type=us[0].role;res.view({list:lista,list2:lista2,type:us[0].role, layout:"layout_extended"});},200);
                 }
             });
         } else {

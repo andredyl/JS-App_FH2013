@@ -18,7 +18,7 @@ module.exports = {
                 } else if (usr.length > 0) {
                     usr.forEach(function(u) {
                         if (u.role =='professor'){
-                            res.view();
+                            res.view({layout:"layout_extended"});
                         }
                         else {
                             res.send(400, {error: "You don't have permission to create a Subject"})
@@ -66,7 +66,7 @@ module.exports = {
                                     if(e){
                                         req.send(500, {error: "DB Error"});
                                     } else {
-                                        res.redirect('/menu');
+                                        res.redirect('/landing');
                                     };
                                 });
                         }
@@ -122,7 +122,7 @@ module.exports = {
                                         if(e){
                                             req.send(500, {error: "DB Error"});
                                         } else {
-                                            res.redirect('/menu');
+                                            res.redirect('/landing');
                                         };
                                     });
                             }
@@ -162,7 +162,7 @@ module.exports = {
 
                             });
                         });
-                setTimeout(function(){res.view({sub:req.param("subject"),ex:exam,pr:project,hasgroup:bo});},200);
+                setTimeout(function(){res.view({sub:req.param("subject"),ex:exam,pr:project,hasgroup:bo,layout:"layout_extended"});},200);
             });
                 });}
             else {
@@ -183,7 +183,7 @@ module.exports = {
                 }
             else {
                 if (usr[0].role =='professor'){
-                    res.view();
+                    res.view({layout:"layout_extended"});
                 }
                 else {
                     res.send(400, {error: "You don't have permission to create an Exam"})
@@ -240,7 +240,7 @@ module.exports = {
                                                        if(fg){
                                                            res.send(500, {error: "DB Error"});
                                                        } else {
-                                                           res.redirect('/menu');
+                                                           res.redirect('/landing');
                                                        }});
                                            }});
                                });
@@ -267,7 +267,7 @@ module.exports = {
                 }
                 else {
                     if (usr[0].role =='professor'){
-                        res.view();
+                        res.view({layout:"layout_extended"});
                     }
                     else {
                         res.send(400, {error: "You don't have permission to create an Exam"})
@@ -314,7 +314,7 @@ module.exports = {
                                                     if(ab){
                                                         res.send(500, {error: "DB Error"});
                                                     } else {
-                                                res.redirect('/menu');
+                                                res.redirect('/landing');
                                             }});
 
                                         });
