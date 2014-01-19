@@ -67,7 +67,19 @@ module.exports = {
 
     getEvents : function (req,res) {
         Calendar.find({username : req.session.user},function(err,events){
-            res.send(events);
+            Users.findByUsername(req.session.user).done(function(e,u){
+                Users_Subjects.findByUserID(u[0].id).done(function(er,us){
+                   if (us.length>0){
+                       us.forEach(function(x) {
+                           Calendar.find({username: x.subjectID},function(error,ev){
+                               if (ev.length>0){
+                              events=events.concat(ev)}
+                           });setTimeout(function(){res.send(events);},200);
+                       });
+                   }
+                });
+            });
+
         });
     },
 

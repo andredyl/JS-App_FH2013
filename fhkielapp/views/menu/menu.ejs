@@ -1,7 +1,7 @@
 <% var title = 'Main Menu' %>
-<% include ../auth/head %>
+<%- partial('../partials/header')%>
 
-<h1>Create subject</h1>
+<h1>Subject</h1>
 <%if (type=='professor'){%>
 <p>
     <a href='/createsubject'> Create Subject</a>
@@ -25,4 +25,4 @@
 <%}%>
 
 <br/><br/>
-<% include ../auth/foot %>
+<%- partial('../partials/footer') %>
