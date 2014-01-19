@@ -1,8 +1,11 @@
 <% var title = 'Landing' %>
-<%- partial('../partials/header')%>
+<%- partial('../partials/header_authenticated')%>
 
+<div id="content-section">
+<div class="page-header">
 <h1>Welcome</h1>
-<%if (type=='professor'){%>
+</div>
+<% if (type=='professor'){ %>
 <p>
     <a href='/createsubject'> Create Subject</a>
 </p>
@@ -12,21 +15,33 @@
 <p>
     <a href='/createproject'> Create Project</a>
 </p>
-<%} else {%>
+<% } else { %>
 <p>
     <a href='/enroll'> Enroll Subject </a>
 </p>
-<p>
+
+
 <h3>Your Subjects:</h3>
-<% if (list.length > 0) {list.forEach(function(u) { %>
-<tr><a href="/subjectmenu?subject=<%=u%>"><%=u%></a><br/></tr>
-<%});}%>
-</p>
+<div class="list">
+<ul class="">
+<% if (list.length > 0) {
+    list.forEach(function(u) { 
+%>
+<div><a href="/subjectmenu?subject=<%=u%>"><%=u%></a><br/></div>
+<%                          });
+    }
+%>
+</ul>
+</div>
 <h3>Your Groups:</h3>
 <% if (list2.length > 0) {list2.forEach(function(a) { %>
 <tr><%=a%><br/></tr>
 <%});}%>
 <%}%>
 
-<br/><br/>
-<%- partial('../partials/footer') %>
+</div>
+<div id="chat-section">
+<%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>
