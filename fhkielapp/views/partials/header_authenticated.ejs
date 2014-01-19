@@ -1,13 +1,16 @@
 <header id="header" class="container">
 <div class="inside">
-    <div class="header-wide">
+    <div class="header-wide row">
     
-        <a href="/" id="logo">FH Kiel</a>
+        <div class="home"><a href="/" id="logo"></a></div>
+        <div class="banner"><%= sails.config.appName%></div>
+        <div class="metanavi">
+            <%- partial("metanavi") %>
+        </div>
+        
     
     </div>
-    <div id="nav" class="container">
-    <%- partial("menu") %>
-    </div>
+    
 </div>
 
 
@@ -16,6 +19,10 @@
 <div id="container" class="container">
     <!-- main start .. -->
     <div id="main" class="inside">
+    
+    <div id="nav-section" class="container">
+    <%- partial("menu") %>
+    </div>
     
 
 
