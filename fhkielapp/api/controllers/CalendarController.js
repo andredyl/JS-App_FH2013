@@ -92,8 +92,10 @@ module.exports = {
                     if (us.length>0){
                         us.forEach(function(x) {
                             Calendar.find({username: x.subjectID},function(error,ev){
-                                    if (ev.length > 0)
-                                        readonly.push(ev[0].id)
+                                    if (ev.length > 0) {
+                                        for(var i = 0; i<ev.length;i++)
+                                            readonly.push(ev[i].id);
+                                    }
                             });
                         });setTimeout(function(){res.send(readonly);},200);
                     }
