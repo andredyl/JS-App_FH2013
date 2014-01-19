@@ -86,7 +86,7 @@ module.exports = {
                     if(err) {
                         res.send(500, { error: "DB Error"});
                     } else {
-            res.view({list:usr});}
+            res.view({list:usr,layout:"layout_extended"});}
                 });
         } else {
             res.redirect('/login');
