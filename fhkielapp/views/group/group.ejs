@@ -1,33 +1,38 @@
-<% var title = 'Group' %>
-<%- partial('../partials/header')%>
+<%- partial('../partials/header_authenticated')%>
 
-<h1>Group</h1>
+<div id="content-section">
+    <h1>Group</h1>
 
-<h2>
-<form method="post" action="/addmember">
+    <h2>
+        <form method="post" action="/addmember">
+            <p>
+                <label>Username:</label>
+                <input type="text" name="uname">
+            </p>
+            <input type="submit" value="Add">
+            </p>
+        </form>
+    </h2>
+
+    <h2>Group Posts</h2>
     <p>
-        <label>Username:</label>
-        <input type="text" name="uname">
+        <%history.forEach(function(u) { %>
+        <tr><%=u.text%><br/></tr>
+        <%});%>
     </p>
-        <input type="submit" value="Add">
-    </p>
-</form>
-</h2>
+    <form method="post" action="/group">
+        <p>
+            <label>Post:</label>
+            <input type="text" name="message">
+        </p>
+        <input type="submit" value="Post">
+        </p>
+    </form>
 
-<h2>Group Posts</h2>
-<p>
-    <%history.forEach(function(u) { %>
-    <tr><%=u.text%><br/></tr>
-    <%});%>
-</p>
-<form method="post" action="/group">
-    <p>
-        <label>Post:</label>
-        <input type="text" name="message">
-    </p>
-    <input type="submit" value="Post">
-    </p>
-</form>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
 
+<%- partial('../partials/footer')%>
 
-<%- partial('../partials/footer') %>
