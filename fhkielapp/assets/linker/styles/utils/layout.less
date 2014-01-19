@@ -147,12 +147,19 @@ a.anchortext{
 /* layout styles for authenticated (chat hanging by the side) */
 body.authenticated{
     
+    #container{
+        
+        padding:10px 0px;
+        
+    }
+    
     #wrapper{
         
         width:100%;
         margin:0 0;
         background:none;
         background-image:none;
+        padding:0px;
         
         #header{
             
@@ -162,20 +169,107 @@ body.authenticated{
             top: 0;
            
             
-            .blue-gradient;
-            .shadow;
+            
+            
+            
             .navbar-fixed-top;
             
+            
+            
+            
             .header-wide{
+                .blue-gradient;
+                padding:10px;
+                .shadow;
                 
-                height:100px;
-                border:1px solid red;
+                        
+                        font-size:21px;
+                        
+                        color:#fff;
+                        
+                        
+               .home{
+                
+                float:left;
+                margin-left:25px;
+                min-height:32px;
+                
+                     a#logo{
+                        
+                        text-decoration:none;
+                        
+                        color:#fff;
+                        &:before{
+                            .icon(@fa-var-home);
+                            font-size:32px;
+                            line-height:32px;
+                            margin-right:5px;
+                            font-weight:normal;
+                            
+                        }
+                        
+                        &:hover{
+                            text-decoration:none;
+                        }
+                    }
+               }
+               
+               .banner{
+                    float:left;
+                    margin-left:15px;
+                    font-family:@openSansFontFamily;
+                    min-height:32px;
+                    line-height:32px;
+                    text-transform:uppercase;
+                    font-weight:bold;
+               }
+               
+               .metanavi{
+                    float:right;
+                    min-height:32px;
+                    font-size:12px;
+                   
+                    line-height:32px;
+                    
+                    .navbar-nav{
+                        li{
+                            a{
+                                padding-top:5px;
+                                padding-bottom:5px;
+                                text-decoration:none;
+                                line-height:14px;
+                                font-family:@sansFontFamily;
+                                
+                                
+                                color:#fff;
+                                
+                                &:before{
+                                  
+                                    font-family:FontAwesome;
+                                    font-size:14px;
+                                    line-height:12px;
+                                    padding:5px 3px;
+                                    
+                                }
+                                
+                                &:hover{
+                                    color:#900;
+                                }
+                            }
+                        }
+                    }
+                    
+                    
+               }
+               
                 
                 
             }
             
             
         }
+        
+        
         
         #container{
             
@@ -184,10 +278,10 @@ body.authenticated{
             width:100%;
             .clearfix;
             
-            .gray-gradient;
+            background:none;
             
     
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            
             
             
         }
@@ -195,14 +289,26 @@ body.authenticated{
         
     }
     
+    #nav-section{
+            
+        margin: 118px 0 50px;
+        padding:15px;
+        float: left;
+        height: 100%;
+        width: 10%;
+        
+            
+    }
+    
     #content-section{
         
-        margin: 125px 0 50px;
-        border-right: 1px solid #118798;
+        margin: 118px 0 50px;
+        padding:20px;
         left: 0;
         float: left;
         height: 100%;
-        width: 210px;
+        width:80%;
+        border-left: 1px solid #118798;
         
     }
     
@@ -210,10 +316,16 @@ body.authenticated{
             
             width: 10%;
             overflow-y: auto;
-            padding: 140px 25px 125px 20px;
+            padding: 20px;
             position: absolute;
-            right:0px;
+            right:7px;
+            top:50px;
             min-width: 200px;
+            
+            border:2px solid #ccc;
+            border-top:none;
+            
+            .lightblue-gradient;
     }
     
     
