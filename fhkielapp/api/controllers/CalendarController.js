@@ -74,8 +74,8 @@ module.exports = {
                            Calendar.find({username: x.subjectID},function(error,ev){
                                if (ev.length>0){
                               events=events.concat(ev)}
-                           });setTimeout(function(){res.send(events);},200);
-                       });
+                           });
+                       });setTimeout(function(){res.send(events);},200);
                    }
                     else {setTimeout(function(){res.send(events);},200);}
                 });
