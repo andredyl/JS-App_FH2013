@@ -18,7 +18,7 @@
 module.exports = {
     
   index : function (req,res) {
-      res.view();
+      res.view({layout:"layout_extended"});
   },
 
     eventHandler: function (req,res) {

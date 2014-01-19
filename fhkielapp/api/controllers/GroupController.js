@@ -29,14 +29,14 @@ module.exports = {
                                     }
                                     else
                                     {
-                                        res.view();
+                                        res.view({layout:"layout_extended"});
                                     }
 
                                 });
                             });
                             }
                             else {
-                                res.view();
+                                res.view({layout:"layout_extended"});
                             }
 
                         }
@@ -73,7 +73,7 @@ module.exports = {
                                     if(a){
                                         res.send(500, {error: "DB Error"});
                                     } else {
-                                        res.redirect('/menu');
+                                        res.redirect('/landing');
                                     }
                                 });
                             }
@@ -92,7 +92,7 @@ module.exports = {
     group: function(req,res){
         if (req.session.user) {
             Posts.findByGroupID(req.session.groupid).done(function(err,usr){
-                res.view({history:usr});
+                res.view({layout:"layout_extended",history:usr});
             });
 
         } else {
