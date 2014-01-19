@@ -1,19 +1,22 @@
 <%- partial('../partials/header_authenticated')%>
 
 <div id="content-section">
-    <h1><%=sub%></h1>
+    <div class="page-header">
+        <h1><%=sub%></h1>
+    </div>
 
-    <h3>Exam information</h3>
-    <%=ex%>
-    <br/><br/>
-    <h3>Project information</h3>
-    <%=pr%>
-    <br/><br/>
-    <h3>Group</h3>
+    <h2>Exam information</h2>
+    <p><%=ex%></p>
+    
+    
+    <h2>Project information</h2>
+    <p><%=pr%></p>
+    
+    <h2>Groups</h2>
     <%if (hasgroup){%>
-    <a href="/group?sub=<%=sub%>">Project Group</a>
+    <a href="/group?sub=<%=sub%>" class="btn btn-primary">Project Group</a>
     <%}else{%>
-    <a href="/creategroup?sub=<%=sub%>">Create Project Group</a>
+    <a href="/creategroup?sub=<%=sub%>" class="btn btn-primary">Create Project Group</a>
     <%}%>
 </div>
 <div id="chat-section">
