@@ -1,28 +1,33 @@
-<% var title = 'Create Project' %>
-<%- partial('../partials/header')%>
+<%- partial('../partials/header_authenticated')%>
 
-<h1>Create Project</h1>
+<div id="content-section">
+    <h1>Create Project</h1>
 
-<form method="post" action="/createproject">
-    <p>
-        <label>Subject:</label>
-        <input type="text" name="subject">
-    </p>
-    <p>
-        <label>Name:</label>
-        <input type="text" name="pname">
-    </p>
-    <p>
-        <label>Submission Deadline:</label>
-        <input type="text" name="deadline">
-    </p>
-    <p>
-        <label>Description:</label>
-        <input type="text" name="description">
-    </p>
-    <p>
-        <input type="submit" value="Create">
-    </p>
-</form>
+    <form method="post" action="/createproject">
+        <p>
+            <label>Subject:</label>
+            <input type="text" name="subject">
+        </p>
+        <p>
+            <label>Name:</label>
+            <input type="text" name="pname">
+        </p>
+        <p>
+            <label>Submission Deadline:</label>
+            <input type="text" name="deadline">
+        </p>
+        <p>
+            <label>Description:</label>
+            <input type="text" name="description">
+        </p>
+        <p>
+            <input type="submit" value="Create">
+        </p>
+    </form>
 
-<%- partial('../partials/footer') %>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>

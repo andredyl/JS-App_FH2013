@@ -1,20 +1,24 @@
-<% var title = 'Create Subject' %>
-<%- partial('../partials/header')%>
+<%- partial('../partials/header_authenticated')%>
 
-<h1>Create Subject</h1>
+<div id="content-section">
+    <h1>Create Subject</h1>
 
-<form method="post" action="/createsubject">
-    <p>
-        <label>Name:</label>
-        <input type="text" name="name">
-    </p>
-    <p>
-        <label>Term:</label>
-        <input type="text" name="term">
-    </p>
-    <p>
-        <input type="submit" value="Create">
-    </p>
-</form>
+    <form method="post" action="/createsubject">
+        <p>
+            <label>Name:</label>
+            <input type="text" name="name">
+        </p>
+        <p>
+            <label>Term:</label>
+            <input type="text" name="term">
+        </p>
+        <p>
+            <input type="submit" value="Create">
+        </p>
+    </form>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
 
-<%- partial('../partials/footer') %>
+<%- partial('../partials/footer')%>
