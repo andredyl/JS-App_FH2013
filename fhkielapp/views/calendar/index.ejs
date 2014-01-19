@@ -28,4 +28,12 @@
     var dp = new dataProcessor("/calendar/eventHandler");
     dp.init(scheduler);
     dp.setTransactionMode("POST", false);
+
+    setTimeout(function(){
+        $.get("/calendar/getReadOnlyEvents",function(data){
+            data.forEach(function(e){
+                    scheduler.getEvent(e).readonly = true;
+            });
+        })
+    },600);
 </script>

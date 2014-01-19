@@ -2,7 +2,7 @@
  * CalendarController
  *
  * @module      :: Controller
- * @description	:: A set of functions called `actions`.
+ * @description :: A set of functions called `actions`.
  *
  *                 Actions contain code telling Sails how to respond to a certain type of request.
  *                 (i.e. do stuff, then send some JSON, show an HTML page, or redirect to another URL)
@@ -83,6 +83,26 @@ module.exports = {
 
         });
     },
+
+    getReadOnlyEvents : function (req,res) {
+        var readonly = [];
+        Calendar.find({username : req.session.user},function(err,events){
+            Users.findByUsername(req.session.user).done(function(e,u){
+                Users_Subjects.findByUserID(u[0].id).done(function(er,us){
+                    if (us.length>0){
+                        us.forEach(function(x) {
+                            Calendar.find({username: x.subjectID},function(error,ev){
+                                    if (ev.length > 0)
+                                        readonly.push(ev[0].id)
+                            });
+                        });setTimeout(function(){res.send(readonly);},200);
+                    }
+                });
+            });
+        });
+    },
+
+
 
   /**
    * Overrides for the settings in `config/controllers.js`
