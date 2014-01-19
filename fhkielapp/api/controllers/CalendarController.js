@@ -77,6 +77,7 @@ module.exports = {
                            });setTimeout(function(){res.send(events);},200);
                        });
                    }
+                    else {setTimeout(function(){res.send(events);},200);}
                 });
             });
 
