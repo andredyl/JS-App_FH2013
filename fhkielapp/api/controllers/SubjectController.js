@@ -183,7 +183,13 @@ module.exports = {
                 }
             else {
                 if (usr[0].role =='professor'){
-                    res.view({layout:"layout_extended"});
+                    Subjects.find()
+                        .limit(20).done(function(err,usr) {
+                            if(err) {
+                                res.send(500, { error: "DB Error"});
+                            } else {
+                                res.view({list:usr,layout:"layout_extended"});}
+                        });
                 }
                 else {
                     res.send(400, {error: "You don't have permission to create an Exam"})
@@ -267,7 +273,13 @@ module.exports = {
                 }
                 else {
                     if (usr[0].role =='professor'){
-                        res.view({layout:"layout_extended"});
+                        Subjects.find()
+                            .limit(20).done(function(err,usr) {
+                                if(err) {
+                                    res.send(500, { error: "DB Error"});
+                                } else {
+                                    res.view({list:usr,layout:"layout_extended"});}
+                            });
                     }
                     else {
                         res.send(400, {error: "You don't have permission to create an Exam"})

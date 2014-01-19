@@ -3,13 +3,7 @@
 <div id="content-section">
     <h1>Enroll</h1>
 
-    <p>
-    <h3>List of available Subjects:</h3>
-    <% if (list.length > 0) {list.forEach(function(u) { %>
-    <tr><%=u.name%><br/></tr>
-    <%});}%>
-    </p>
-    <br/><br/>
+<br/>
     <p>Please enter the desired subject to enroll:</p>
 
     <div class="row">
@@ -20,7 +14,11 @@
         <div class="form-group">
             <label for="inputSubject" class="col-sm-2 control-label">Subject:</label>
             <div class="col-sm-10">
-                <input type="text" class="form-control input-sm" name="subject" id="inputSubject">
+                <select class="form-control input-sm" name="subject" id="inputSubject">
+                    <% if (list.length > 0) {list.forEach(function(u) { %>
+                    <option value="<%=u.name%>"><%=u.name%></option>
+                    <%});}%>
+                </select>
             </div>
             </div>
 
