@@ -14,8 +14,7 @@ module.exports = {
         //otherwise, it will render the login page.
         
         if (req.session.user) {
-            //res.redirect('/menu');
-            return res.view("home/authenticated_index",{layout: "layout_extended"});
+            res.redirect('/landing');
         } else {
             res.view({error: false});
         };
@@ -45,8 +44,7 @@ module.exports = {
                                }));
                                req.session.user = usr[0].username;
                                req.session.cookie.maxAge = 60 * 60 * 1000;
-                               //res.redirect('/menu');
-                                 return res.view("home/authenticated_index",{layout: "layout_extended"});
+                               res.redirect('/landing');
                            });
                        } else {
                            req.session.regenerate(function () {
@@ -54,8 +52,7 @@ module.exports = {
                                    Users.publishUpdate(usr[0].id,{username : usr[0].username, isonline : true});
                                }));
                                req.session.user = usr[0].username;
-                               //res.redirect('/menu');
-                                return res.view("home/authenticated_index",{layout: "layout_extended"});
+                               res.redirect('/landing');
                            });
                        };
                    } else {
@@ -85,14 +82,14 @@ module.exports = {
         }
 
         req.session.destroy(function () {
-            res.redirect('/login');
+            res.redirect('/');
         });
     },
 
     signup : function (req,res) {
 
         if (req.session.user) {
-            res.redirect('/menu');
+            res.redirect('/landing');
         } else {
             res.view({error: false});
         };
