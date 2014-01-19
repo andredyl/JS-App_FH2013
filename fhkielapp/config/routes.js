@@ -159,7 +159,13 @@ module.exports.routes = {
     'post /creategroup': {
         controller: 'group',
         action: 'creategroup_post'
+    },
+
+    '/landing' : {
+        controller: 'landing',
+        action: 'landing'
     }
+
 
   /*
   // But what if you want your home page to display
