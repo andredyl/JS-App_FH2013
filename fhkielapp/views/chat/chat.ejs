@@ -18,9 +18,14 @@
 </ul>
 
 <script type="text/javascript">
+    
+    
+    
+    
    $(document).ready(function(){
         
         $("#chat-section").css("height",$("#container").height()-64);
+        $("#content-section").css("width",$("#content-section").width()*1 - $("#chat-section").width()*1);
         
         
         loadUserList();
