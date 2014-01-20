@@ -15,7 +15,8 @@ module.exports = {
       lastname: 'STRING',
       matnumber: 'STRING',
       email : 'EMAIL',
-      role : 'STRING'
+      role : 'STRING',
+      isonline : 'BOOLEAN'
   }
 
 };

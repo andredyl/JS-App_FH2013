@@ -1,20 +1,42 @@
-<% var title = 'Create Subject' %>
-<% include ../auth/head %>
+<%- partial('../partials/header_authenticated')%>
 
-<h1>Create Subject</h1>
+<div id="content-section">
+    <div class="page-header">
+        <h1>Create Subject</h1>
+    </div>
+    <% if( error !== undefined && error!==false){%>
+        <div  class="alert alert-danger"><%= error %></div>
+    <% }%>
+   
+        <div class="form-wrapper">
+            <form  action="/createsubject" class="form-horizontal" role="form" method="post">
 
-<form method="post" action="/createsubject">
-    <p>
-        <label>Name:</label>
-        <input type="text" name="name">
-    </p>
-    <p>
-        <label>Term:</label>
-        <input type="text" name="term">
-    </p>
-    <p>
-        <input type="submit" value="Create">
-    </p>
-</form>
+                <div class="form-group">
+                    <label for="inputName" class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control input-sm" name="name" id="inputName">
+                    </div>
+                </div>
 
-<% include ../auth/foot %>
+                <div class="form-group">
+                    <label for="inputTerm" class="col-sm-2 control-label">Term:</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control input-sm" name="term" id="inputTerm">
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Create</button>
+                    </div>
+                </div>
+
+    </form>
+    </div>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>

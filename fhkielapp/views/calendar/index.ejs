@@ -1,0 +1,43 @@
+<%- partial('../partials/header_authenticated')%>
+
+<div id="content-section">
+    <h1>Calendar</h1>
+    <div id="scheduler_here" class="dhx_cal_container" style='width:550px; height:400px;position:relative'>
+        <div class="dhx_cal_navline">
+            <div class="dhx_cal_prev_button">&nbsp;</div>
+            <div class="dhx_cal_next_button">&nbsp;</div>
+            <div class="dhx_cal_today_button"></div>
+            <div class="dhx_cal_date"></div>
+            <div class="dhx_cal_tab" name="day_tab" style="right:204px;"></div>
+            <div class="dhx_cal_tab" name="week_tab" style="right:140px;"></div>
+            <div class="dhx_cal_tab" name="month_tab" style="right:76px;"></div>
+        </div>
+        <div class="dhx_cal_header"></div>
+        <div class="dhx_cal_data"></div>
+    </div>
+
+
+    <script type="text/javascript">
+        scheduler.config.xml_date="%Y-%m-%d %H:%i";
+        scheduler.init('scheduler_here',new Date(),"month");
+        scheduler.load("/calendar/getEvents", "json");
+
+        var dp = new dataProcessor("/calendar/eventHandler");
+        dp.init(scheduler);
+        dp.setTransactionMode("POST", false);
+
+        setTimeout(function(){
+            $.get("/calendar/getReadOnlyEvents",function(data){
+                data.forEach(function(e){
+                    scheduler.getEvent(e).readonly = true;
+                });
+            })
+        },600);
+    </script>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>
+

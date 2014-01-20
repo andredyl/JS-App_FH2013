@@ -1,0 +1,44 @@
+<%- partial('../partials/header_authenticated')%>
+
+<div id="content-section">
+    <div class="page-header">
+        <h1><%=sub%></h1>
+    </div>
+
+    <h2>Exam information</h2>
+    <dl class="dl-horizontal">
+        <dt>Primary Exam date</dt>
+        <dd class="text-danger"><%=ex.first_date%></dd>
+        
+        <dt>Second Exam date</dt>
+        <dd class="text-danger"><%=ex.second_date%></dd>
+    </dl>
+    
+    
+    
+    <h2>Project information</h2>
+    <dl class="dl-horizontal">
+        <dt>Project Name:</dt>
+        <dd><%=pr.name%></dd>
+        
+        <dt>Project Description:</dt>
+        <dd><%=pr.description%></dd>
+        
+        <dt>Submission Deadline:</dt>
+        <dd class="text-danger"><%=pr.deadline%></dd>
+    </dl>
+    
+    
+    <h2>Groups</h2>
+    <%if (hasgroup){%>
+    <a href="/group?sub=<%=sub%>" class="btn btn-primary">Project Group</a>
+    <%}else{%>
+    <a href="/creategroup?sub=<%=sub%>" class="btn btn-primary">Create Project Group</a>
+    <%}%>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>
+

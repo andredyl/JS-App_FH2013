@@ -1,0 +1,60 @@
+body.authenticated #chat-section{
+   
+   h3{
+        border-bottom:1px solid #ccc; 
+   }
+   
+   
+   ul#chatList, ul#userList{
+     margin:0px;
+     padding:0px;
+     list-style: none;
+     
+     li{
+            a{
+                font-family:@openSansFontFamily;
+                font-weight:bold;
+                display:block; 
+                text-decoration:none; 
+                line-height:30px;
+                border-bottom-style:solid; 
+                border-bottom-width:1px; 
+                border-bottom-color:#CCCCCC; 
+                padding-left:10px; 
+                cursor:pointer;
+                
+                
+                &.chat-user-true{
+                    pointer-events: auto;
+                    color:green;
+                    &:before{
+                        .icon(@fa-var-user);
+                        padding:5px;
+                        font-size:14px;
+                        line-height:14px;
+                    }
+                    
+                    &:hover{
+                        background:#ccc;
+                    }
+                }
+                &.chat-user-false{
+                    pointer-events: none;
+                    color:gray;
+                    &:before{
+                        .icon(@fa-var-minus-circle);
+                        padding:5px;
+                        font-size:14px;
+                        line-height:14px;
+                    }
+                    &:hover{
+                    
+                        cursor:not-allowed;
+                    }
+                }
+                
+                
+            }
+     }
+   }
+}

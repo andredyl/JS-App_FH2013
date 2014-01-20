@@ -104,7 +104,68 @@ module.exports.routes = {
     '/menu' : {
         controller: 'menu',
         action: 'menu'
+    },
+
+    '/subjectmenu': {
+        controller: "subject",
+        action: "subjectmenu"
+    },
+
+    'get /createexam' : {
+        controller: 'subject',
+        action: 'createexam'
+    },
+
+    'post /createexam' : {
+        controller: 'subject',
+        action: 'createexam_post'
+    },
+
+    'get /createproject' : {
+        controller: 'subject',
+        action: 'createproject'
+    },
+
+    'post /createproject' : {
+        controller: 'subject',
+        action: 'createproject_post'
+    },
+
+    'get /chat' : {
+        controller: 'chat',
+        action: 'chat'
+    },
+
+    'get /group' : {
+        controller: 'group',
+        action: 'group'
+    },
+
+    'post /group' : {
+        controller: 'group',
+        action: 'group_post'
+    },
+
+    'post /addmember': {
+        controller: 'group',
+        action: 'addmember_post'
+    },
+
+    'get /creategroup': {
+        controller: 'group',
+        action: 'creategroup'
+    },
+
+    'post /creategroup': {
+        controller: 'group',
+        action: 'creategroup_post'
+    },
+
+    '/landing' : {
+        controller: 'landing',
+        action: 'landing'
     }
+
 
   /*
   // But what if you want your home page to display

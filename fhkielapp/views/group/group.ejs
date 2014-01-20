@@ -1,0 +1,57 @@
+<%- partial('../partials/header_authenticated')%>
+
+<div id="content-section">
+    <div class="page-header">
+        <h1>Group</h1>
+    </div>
+    <div class="row">
+        <div class="form-wrapper">
+        <form method="post" class="form-horizontal" role="form" action="/addmember">
+            <div class="form-group">
+                <label for="inputUser" class="col-sm-2 control-label">Add Member:</label>
+                <div class="col-sm-10">
+                <select class="form-control input-sm" id="inputUser" name="uname" >
+                    <% if (list.length > 0) {list.forEach(function(u) { %>
+                    <option value="<%=u.username%>"><%=u.firstname+' '+u.lastname%></option>
+                    <%});}%>
+                </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2">
+            <button type="submit" class="btn btn-primary btn-lg">Add</button>
+                 </div>
+            </div>
+        </form>
+
+
+    <h2>Group Posts</h2>
+    <p>
+        <%history.forEach(function(u) { %>
+        <b><%=u.sender%>: </b><%=u.text%><br/>
+        <%});%>
+    </p>
+            <div class="row">
+                <div class="form-wrapper">
+    <form method="post" class="form-horizontal" role="form" action="/group">
+        <div class="form-group">
+            <label for="inputPost" class="col-sm-2 control-label">Post:</label>
+            <div class="col-sm-10">
+            <input type="text" class="form-control input-sm" id="inputPost" name="message">
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2">
+                <button type="submit" class="btn btn-primary btn-lg">Post</button>
+            </div>
+        </div>
+    </form>
+</div>
+        </div>
+</div>
+<div id="chat-section">
+    <%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>
+

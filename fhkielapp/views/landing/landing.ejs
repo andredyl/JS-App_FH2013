@@ -1,0 +1,47 @@
+<% var title = 'Landing' %>
+<%- partial('../partials/header_authenticated')%>
+
+<div id="content-section">
+<div class="page-header">
+<h1>Welcome</h1>
+</div>
+<% if (type=='professor'){ %>
+
+<% } else { %>
+<h3>Your Subjects:</h3>
+<div class="listing">
+<ul >
+<% if (list.length > 0) {
+    list.forEach(function(u) { 
+%>
+<li><a href="/subjectmenu?subject=<%=u%>"><%=u%></a></li>
+<%                          });
+    }else{
+%>
+<li class="no-padding"><div class="no-records">You have no subjects that you are enrolled in.</div></li>
+<%                          
+    }
+%>
+</ul>
+</div>
+
+<h3>Your Groups:</h3>
+<div class="listing">
+<ul class="groups">
+<% if (list2.length > 0) {list2.forEach(function(a) { %>
+<li><%=a%></li>
+<%});}else{%>
+<li class="no-padding"><div class="no-records">You have no groups that you are enrolled in.</div></li>
+<%                          
+    }
+%>
+</ul>
+</div>
+<%}%>
+
+</div>
+<div id="chat-section">
+<%- partial('../chat/chat')%>
+</div>
+
+<%- partial('../partials/footer')%>

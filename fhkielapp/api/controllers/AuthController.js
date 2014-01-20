@@ -1,8 +1,8 @@
 /**
  * AuthController
  *
- * @module		:: Controller
- * @description	:: Contains logic for handling requests.
+ * @module      :: Controller
+ * @description :: Contains logic for handling requests.
  */
 
 var crypto = require ("crypto-js/sha3");
@@ -12,14 +12,21 @@ module.exports = {
     login : function (req,res) {
         //if there is already an authenticated session, return OK.
         //otherwise, it will render the login page.
+        
         if (req.session.user) {
-            res.send(200);
+            res.redirect('/landing');
         } else {
-            res.view();
+            res.view({error: false});
         };
     },
 
     login_post : function (req,res) {
+        var error = false;
+        if(req.body.username == "" || req.body.password == "")
+        {
+           return res.view("auth/login", {error: "Username/Password cannot be left empty."});
+        }
+        
         //search for the username in the database.
        Users.findByUsername(req.body.username).done(function(err,usr) {
            if(err) {
@@ -32,34 +39,60 @@ module.exports = {
                        //in any case, a new session will be created.
                        if (req.body.remember_me) {
                            req.session.regenerate(function () {
+                               Users.update({id: usr[0].id}, {isonline : true}, (function (err, usr) {
+                                   Users.publishUpdate(usr[0].id,{username : usr[0].username, isonline : true});
+                               }));
                                req.session.user = usr[0].username;
                                req.session.cookie.maxAge = 60 * 60 * 1000;
-                               res.send(200);
+                               res.redirect('/landing');
                            });
                        } else {
                            req.session.regenerate(function () {
+                               Users.update({id: usr[0].id}, {isonline : true}, (function (err, usr) {
+                                   Users.publishUpdate(usr[0].id,{username : usr[0].username, isonline : true});
+                               }));
                                req.session.user = usr[0].username;
-                               res.send(200);
+                               res.redirect('/landing');
                            });
                        };
                    } else {
-                       res.send(400, {error: "Please check your Username/Password"});
+                       return res.view("auth/login", {error: "Please check your Username/Password."});
+                       
+                       
                    }
                } else {
-                   res.send(400, {error: "Please check your Username/Password"});
+                   
+                   //res.send(400, {error: "Username does not seem to exist."});
+                  return res.view("auth/login", {error: "Username does not seem to exist."});
+                   
                }
            }
+           
        });
+       
    },
 
     logout : function (req,res) {
+        var usrname = req.session.user
+        if (usrname !== undefined)
+        {
+            Users.update({username: usrname}, {isonline : false}, (function (err, usr) {
+                Users.publishUpdate(usr[0].id,{username : usrname, isonline : false});
+            }));
+        }
+
         req.session.destroy(function () {
-            res.redirect('/login');
+            res.redirect('/');
         });
     },
 
     signup : function (req,res) {
-        res.view();
+
+        if (req.session.user) {
+            res.redirect('/landing');
+        } else {
+            res.view({error: false});
+        };
     },
 
     signup_post : function (req,res) {
@@ -68,6 +101,14 @@ module.exports = {
         //exist in the database. In case both conditions are false,
         //the data will be inserted into the database and a welcome
         //email is sent.
+        var error = false;
+        if(req.body.email == "" || req.body.name == ""
+           || req.body.matnumber == "" || req.body.password == ""
+           || req.body.surname == ""|| req.body.username == "")
+        {
+             res.view("auth/signup", {error: "One or more required fields are missing"});
+        }
+
         Users.find({
             or : [
                 {username : req.body.username},
@@ -88,23 +129,29 @@ module.exports = {
                 Users.create({
                     username: req.body.username,
                     password: generatePWD(req.body.password, generateUser(req.body.username)),
-                    firstname: req.body.firstname,
-                    lastname: req.body.lastname,
+                    firstname: req.body.name,
+                    lastname: req.body.surname,
                     matnumber: req.body.matnumber,
-                    email : req.body.email
+                    role:'student',
+                    email : req.body.email,
+                    isonline : false
                 }).done(function (err,usr){
                         if(err){
-                            req.send(500, {error: "DB Error"});
+
+                            res.view("auth/signup", {error: "Wrong Email Format - No Foreign Characters"});
+
+                            //res.send(500, {error: "DB Error"});
                         } else {
                             EmailService.sendWelcomeEmail({
                                 "username": req.body.username,
                                 "infoname": req.body.firstname + ' ' + req.body.lastname,
                                 "email": req.body.email });
-                            res.send(200);
+                            res.redirect('/login');
                         };
                     });
             };
         });
+
     },
 
     changepwd : function (req,res) {
@@ -142,7 +189,7 @@ module.exports = {
         var token = req.query["t"];
         var user = req.query["u"];
 
-        if (token) {
+            if (token) {
             Tokens.findById(token).done(function(err,tkn) {
                 if(err) {
                     res.send(500, { error: "DB Error"});
@@ -160,7 +207,7 @@ module.exports = {
                 };
             });
         } else {
-            res.view();
+                res.view({error: false});
         };
     },
 
@@ -170,16 +217,18 @@ module.exports = {
         //checks for the e-mail in the database and if found,
         //send the reset link to the user.
         var token = generateResetCode(128);
-
+        var error = false;
         Users.findByEmail(req.body.email).done(function(err,usr) {
             if(err) {
                 res.send(500, { error: "DB Error"});
             } else {
+                if(usr.length > 0){
                 Tokens.create({
                     id : token,
                     user : usr[0].username,
                     createtime : new Date().getTime()
-                }).done(function(err,tkn) {
+                }
+                ).done(function(err,tkn) {
                         if (err) {
                             res.send(500, { error: "DB Error"});
                         } else {
@@ -188,9 +237,14 @@ module.exports = {
                                 "user" : usr[0].username,
                                 "token" : token,
                                 "email": usr[0].email});
-                            res.send(200);
+                            res.view("auth/login", {error: "Email Sent"});
                         };
                     });
+                }
+                else
+                {
+                    res.view("auth/resetpwd", {error: "Email Not Found"});
+                }
             };
         });
     }
