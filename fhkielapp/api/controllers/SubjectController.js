@@ -145,9 +145,22 @@ module.exports = {
         Subjects.findByName(req.param("subject")).done(function(err,usr){
             if (usr.length >0){
                 Projects.findBySubjectID(usr[0].id).done(function(er,us){
-                    if (us.length>0){project=us[0].name+': '+us[0].description+' Deadline: '+us[0].deadline;}
+                    //if (us.length>0){project=us[0].name+': '+us[0].description+' Deadline: '+us[0].deadline.toDateString();}
+                    if (us.length>0){
+                            project={
+                                    name: us[0].name,
+                                    description: us[0].description,
+                                    deadline: us[0].deadline.toDateString()
+                            }
+                    }
                     Exams.findBySubjectID(usr[0].id).done(function(e,u){
-                        if (u.length>0){exam='Date First Round: '+u[0].date1+'\n Date Second Round: '+u[0].date2;}
+                        //if (u.length>0){exam='Date First Round:'+u[0].date1.toDateString()+'.  Date Second Round:'+u[0].date2.toDateString();}
+                        if (u.length>0){
+                            exam={
+                                first_date: u[0].date1.toDateString(),
+                                second_date: u[0].date2.toDateString()
+                                }
+                        }
                         req.session.subjectid=usr[0].id;
                         Users.findByUsername(req.session.user).done(function(d,f){
                             Groups.findBySubjectID(req.session.subjectid).done(function(g,h){
