@@ -91,9 +91,9 @@ module.exports = {
 
     group: function(req,res){
         if (req.session.user) {
-            Posts.findByGroupID(req.session.groupid).done(function(err,usr){
+            Posts.findByGroupID(req.session.groupid).limit(25).done(function(err,usr){
                     Users.find({role:'student'})
-                        .limit(20).done(function(er,us) {
+                        .limit(50).done(function(er,us) {
                             if(er) {
                                 res.send(500, { error: "DB Error"});
                             } else {
@@ -109,13 +109,16 @@ module.exports = {
     group_post: function(req,res){
         if (req.session.user) {
             var fecha= new Date();
-            Posts.create({
-                groupID:req.session.groupid,
-                text:req.body.message,
-                date:fecha
-            }).done(function(a,b){
-            res.redirect('/group');
-                });
+            Users.findByUsername(req.session.user).done(function(err,usr){
+                Posts.create({
+                    groupID:req.session.groupid,
+                    sender:usr[0].firstname+' '+usr[0].lastname,
+                    text:req.body.message,
+                    date:fecha
+                }).done(function(a,b){
+                        res.redirect('/group');
+                    });
+            });
         } else {
             res.redirect('/login');
         };

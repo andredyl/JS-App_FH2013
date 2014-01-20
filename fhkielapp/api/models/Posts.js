@@ -10,6 +10,7 @@ module.exports = {
 
     attributes: {
         groupID: 'STRING',
+        sender: 'STRING',
         text: 'STRING',
         date: 'DATE'
     }
