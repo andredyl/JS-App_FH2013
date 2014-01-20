@@ -5,7 +5,9 @@
     <h1>Create Project</h1>
 </div>
 
-    <div class="row">
+    <% if( error !== undefined && error!==false){%>
+        <div  class="alert alert-danger"><%= error %></div>
+    <% }%>
         <div class="form-wrapper">
             <form  action="/createproject" class="form-horizontal" role="form" method="post">
 
@@ -30,14 +32,14 @@
                 <div class="form-group">
                     <label for="inputSubject" class="col-sm-2 control-label">Submission Deadline:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-sm" name="deadline" id="inputDeadline">
+                        <input type="text" class="form-control input-sm pickdate" name="deadline" id="inputDeadline">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label for="inputSubject" class="col-sm-2 control-label">Description:</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-sm" name="description" id="inputDescription">
+                        <textarea class="form-control input-lg" name="description" id="inputDescription" rows="5"></textarea>
                     </div>
                 </div>
                 <div class="form-group">
@@ -49,6 +51,7 @@
 
     </form>
 
+</div>
 </div>
 <div id="chat-section">
     <%- partial('../chat/chat')%>
