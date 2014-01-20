@@ -7,17 +7,23 @@
 
     <h2>Exam information</h2>
     <dl class="dl-horizontal">
+        <%if (!ex.first_date){%>
+        <dd><%=ex%></dd>
+        <%}else{%>
         <dt>Primary Exam date</dt>
         <dd class="text-danger"><%=ex.first_date%></dd>
         
         <dt>Second Exam date</dt>
-        <dd class="text-danger"><%=ex.second_date%></dd>
+        <dd class="text-danger"><%=ex.second_date%></dd><%}%>
     </dl>
     
     
     
     <h2>Project information</h2>
     <dl class="dl-horizontal">
+        <%if (!pr.description){%>
+        <dd><%=pr%></dd>
+        <%}else{%>
         <dt>Project Name:</dt>
         <dd><%=pr.name%></dd>
         
@@ -25,7 +31,7 @@
         <dd><%=pr.description%></dd>
         
         <dt>Submission Deadline:</dt>
-        <dd class="text-danger"><%=pr.deadline%></dd>
+        <dd class="text-danger"><%=pr.deadline%></dd><%}%>
     </dl>
     
     
