@@ -98,7 +98,7 @@ module.exports = {
                             if(er) {
                                 res.send(500, { error: "DB Error"});
                             } else {
-                                res.view({list:us,layout:"layout_extended",history:usr});}
+                                res.view({error:false, list:us,layout:"layout_extended",history:usr});}
                         });
                 });
 
