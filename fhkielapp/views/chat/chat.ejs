@@ -10,6 +10,10 @@
         
         $("#chat-section").css("height",$("#container").height()-64);
         $("#content-section").css("width",$("#content-section").width()*1 - $("#chat-section").width()*1);
+        
+        
+        $(".pickdate").datepicker({ minDate: 0, dateFormat: "yy-dd-mm"});
+
 
         loadUserList();
         $('#loadconnect').show();
