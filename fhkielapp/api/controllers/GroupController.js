@@ -29,14 +29,14 @@ module.exports = {
                                     }
                                     else
                                     {
-                                        res.view({layout:"layout_extended"});
+                                        res.view({error:false, layout:"layout_extended"});
                                     }
 
                                 });
                             });
                             }
                             else {
-                                res.view({layout:"layout_extended"});
+                                res.view({error:false, layout:"layout_extended"});
                             }
 
                         }
@@ -81,7 +81,8 @@ module.exports = {
                         });
                 }
                 else {
-                    res.send(400,{error:"There is no Project for this Subject yet"});
+                    //res.send(400,{error:"There is no Project for this Subject yet"});
+                    return res.view("group/creategroup",{error:"There is no Project for this Subject yet", layout:"layout_extended" });
                 }
             });
             }
