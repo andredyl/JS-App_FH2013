@@ -7,7 +7,7 @@
 
 
 module.exports = {
-
+    
     createsubject : function (req,res) {
         //if there is already an authenticated session, and the user is a professor, display the create subject page
         //otherwise, it will render the login page.
@@ -18,7 +18,7 @@ module.exports = {
                 } else if (usr.length > 0) {
                     usr.forEach(function(u) {
                         if (u.role =='professor'){
-                            res.view({layout:"layout_extended"});
+                            res.view({error:false, layout:"layout_extended"});
                         }
                         else {
                             res.send(400, {error: "You don't have permission to create a Subject"})
@@ -49,8 +49,10 @@ module.exports = {
                         if (u.name == req.body.name){
                             if (u.term == req.body.term) {
                             regis=true;
-                            res.send(400, {error: "There is already a Subject with this name in this term"});}
-                        };
+                            //res.send(400, {error: "There is already a Subject with this name in this term"});}
+                            return res.view("subject/createsubject",{error: "There is already a Subject with this name in this term",layout:"layout_extended"});
+                            }
+                        }
                     });
                 }
                 if (!regis){
@@ -86,7 +88,7 @@ module.exports = {
                     if(err) {
                         res.send(500, { error: "DB Error"});
                     } else {
-            res.view({list:usr,layout:"layout_extended"});}
+            res.view({error:false, list:usr,layout:"layout_extended"});}
                 });
         } else {
             res.redirect('/login');
@@ -110,7 +112,8 @@ module.exports = {
                                 if (a.userID == usr[0].id){
                                     if (a.subjectID == u[0].id) {
                                         regist=true;
-                                        res.send(400, {error: "You are already enrolled in this subject"});}
+                                        //res.send(400, {error: "You are already enrolled in this subject"});}
+                                        return res.view({error:"You are already enrolled in this subject", layout:"layout_extended"});}
                                 };
                             });
                             }
@@ -162,7 +165,7 @@ module.exports = {
 
                             });
                         });
-                setTimeout(function(){res.view({sub:req.param("subject"),ex:exam,pr:project,hasgroup:bo,layout:"layout_extended"});},200);
+                setTimeout(function(){res.view({error:false, sub:req.param("subject"),ex:exam,pr:project,hasgroup:bo,layout:"layout_extended"});},200);
             });
                 });}
             else {
@@ -188,7 +191,7 @@ module.exports = {
                             if(err) {
                                 res.send(500, { error: "DB Error"});
                             } else {
-                                res.view({list:usr,layout:"layout_extended"});}
+                                res.view({error:false, list:usr,layout:"layout_extended"});}
                         });
                 }
                 else {
@@ -215,7 +218,8 @@ module.exports = {
                            Exams.findBySubjectID(usr[0].id).done(function(e,u){
                                if(u.length>0){
                                    regist=true;
-                                   res.send(400, {error:"There is a registered exam for this subject"});
+                                   //res.send(400, {error:"There is a registered exam for this subject"});
+                                   return res.view("subject/createexam",{error: "There is a registered exam for this subject", layout:"layout_extended"});
                                }
 
                            if (!regist){
@@ -254,7 +258,29 @@ module.exports = {
                            });
                        }
                         else {
-                           res.send(400, {error:"The Subject was not created by you"});
+                           //res.send(400, {error:"The Subject was not created by you"});
+                           var list_sub = [];
+                           Users.findByUsername(req.session.user).done(function(err,usr){
+                            if(err) {
+                                res.send(500, { error: "DB Error"});
+                                }
+                            else {
+                                if (usr[0].role =='professor'){
+                                    Subjects.find()
+                                        .limit(20).done(function(err,list_sub) {
+                                            if(err) {
+                                                res.send(500, { error: "DB Error"});
+                                            } else {
+                                                 return res.view("subject/createexam",{error: "The Subject was not created by you",list:list_sub, layout:"layout_extended"});
+                                                 }
+                                        });
+                                }
+                                else {
+                                    res.send(400, {error: "You don't have permission to create an Exam"})
+                                }
+                            }
+                            });
+                           
                        }
                     });
                 }
@@ -278,7 +304,7 @@ module.exports = {
                                 if(err) {
                                     res.send(500, { error: "DB Error"});
                                 } else {
-                                    res.view({list:usr,layout:"layout_extended"});}
+                                    res.view({error:false, list:usr,layout:"layout_extended"});}
                             });
                     }
                     else {
@@ -305,7 +331,8 @@ module.exports = {
                             Projects.findBySubjectID(usr[0].id).done(function(e,u){
                                 if(u.length>0){
                                     regist=true;
-                                    res.send(400, {error:"There is a registered project for this subject"});
+                                    //res.send(400, {error:"There is a registered project for this subject"});
+                                    return res.view("subject/createproject",{error:"There is a registered project for this subject"});
                                 }
 
                                 if (!regist){
