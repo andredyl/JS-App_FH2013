@@ -95,8 +95,8 @@ module.exports = {
         };
     },
     enroll_post : function (req,res) {
-        //if there is already an authenticated session, return OK.
-        //otherwise, it will render the login page.
+        //if there is already a student enrolled with this student id it will display error
+        //otherwise, it will enroll the student
         var regist = false;
         Users.findByUsername(req.session.user).done(function(err,usr){
             if(err){
@@ -138,6 +138,8 @@ module.exports = {
     },
 
     subjectmenu: function (req,res){
+        //Present the information about the subject the student is displaying, if there is no information, display a predefined text
+        //If the student has a group, present the group menu, otherwise present the option to create a group
     var project='Currently there is no project defined';
     var exam='The dates of the exam are not defined yet';
     var bo=false;
@@ -192,6 +194,8 @@ module.exports = {
     },
 
     createexam: function (req,res){
+        //if there is already an authenticated session, and the user is a professor, display the create exam page
+        //otherwise, it will render the login page.
     if (req.session.user) {
         Users.findByUsername(req.session.user).done(function(err,usr){
             if(err) {
@@ -219,6 +223,7 @@ module.exports = {
     },
 
     createexam_post: function(req,res){
+        //If there is no exam information for the exam, register the information, otherwise display error message
     var regist = false;
     Subjects.findByName(req.body.subject).done(function(err,usr){
             if(err){
@@ -305,6 +310,8 @@ module.exports = {
     },
 
     createproject: function (req,res){
+        //if there is already an authenticated session, and the user is a professor, display the create project page
+        //otherwise, it will render the login page.
         if (req.session.user) {
             Users.findByUsername(req.session.user).done(function(err,usr){
                 if(err) {
@@ -332,6 +339,7 @@ module.exports = {
     },
 
     createproject_post: function(req,res){
+        //Check there is no previous project created and that the professor created the subject. If this is true, create the project
         var regist = false;
         Subjects.findByName(req.body.subject).done(function(err,usr){
             if(err){

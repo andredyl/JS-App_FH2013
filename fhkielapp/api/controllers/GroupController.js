@@ -9,8 +9,8 @@
 module.exports = {
 
     creategroup : function (req,res) {
-        //if there is already an authenticated session, and the user is a professor, display the create subject page
-        //otherwise, it will render the login page.
+        //if there is already an authenticated session, and the user does not have a group, access the create group page
+        //otherwise, it will render the error message.
         if (req.session.user) {
             Users.findByUsername(req.session.user).done(function(err,usr){
                 if(err) {
@@ -51,6 +51,7 @@ module.exports = {
     },
 
     creategroup_post : function(req,res) {
+        //Checks if the subject has a project, if it is true creates the group, otherwise it is redirected to the menu
         if (req.session.user) {
         Users.findByUsername(req.session.user).done(function(e,u){
             if (e){
@@ -91,6 +92,7 @@ module.exports = {
     },
 
     group: function(req,res){
+        //if the user is logged in, displays the list of students to add and the previous posts
         if (req.session.user) {
             Posts.findByGroupID(req.session.groupid).limit(25).done(function(err,usr){
                     Users.find({role:'student'})
@@ -108,6 +110,7 @@ module.exports = {
     },
 
     group_post: function(req,res){
+        //sends the post to the DB and refreshes the page
         if (req.session.user) {
             var fecha= new Date();
             Users.findByUsername(req.session.user).done(function(err,usr){
@@ -126,6 +129,7 @@ module.exports = {
     },
 
     addmember_post: function(req,res){
+        //checks if the member is not enrolled in the subject, if applies, adds it to the group
         if (req.session.user) {
             Users.findByUsername(req.body.uname).done(function(err,usr){
                 if (usr.length>0){

@@ -2,7 +2,7 @@
  * Users_Subjects
  *
  * @module      :: Model
- * @description :: A short summary of how this model works and what it represents.
+ * @description :: Definition of Users_Subjects relational table, used to register and check which students are enrolled to which subjects
  *
  */
 

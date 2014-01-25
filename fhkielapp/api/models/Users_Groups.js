@@ -2,7 +2,7 @@
  * Users_Groups
  *
  * @module      :: Model
- * @description :: A short summary of how this model works and what it represents.
+ * @description :: Definition of Users_Groups relational table, used to register and check which students are in which groups
  *
  */
 
